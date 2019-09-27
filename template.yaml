@@ -18,7 +18,7 @@ Globals:
         ENV: !Ref ENV
 
 Resources:
-  GenerateScoreFunction:
+  TestFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: app.handler
