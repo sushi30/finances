@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - python -V
+      - pip install -U pip setuptools awscli pipenv
+  pre_build:
+    commands:
+      - pipenv install --deploy
+  build:
+    commands:
+      - pipenv run package
+  post_build:
+    commands:
+      - aws cloudformation package --template-file template.yaml --output-template-file packaged.yaml --s3-bucket imri.codebuild.artifacts
+      - cat packaged.yaml
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - packaged.yaml
+  discard-paths: yes
+cache:
+  paths:
+    - ~/.cache/pip/**/*

@@ -1,0 +1,41 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Finance manager.
+
+Parameters:
+  ENV:
+    Type: String
+    AllowedValues:
+      - STAGE
+      - PROD
+
+Globals:
+  Function:
+    Runtime: python3.7
+    MemorySize: 128
+    Environment:
+      Variables:
+        ENV: !Ref ENV
+
+Resources:
+  GenerateScoreFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.handler
+      CodeUri: build.zip
+
+  ExpensesTable:
+    Type: AWS::Serverless::SimpleTable
+    Properties:
+      TableName: expenses
+      PrimaryKey:
+        Name: id
+        Type: Number
+
+  InputFilesbucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: input.files
+
+  ExpensesQueue:
+    Type: AWS::SQS::Queue
