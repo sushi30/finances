@@ -18,7 +18,8 @@ Resources:
           Type: S3
           Properties:
             Bucket: !Ref InputFilesbucket
-            Events: s3:ObjectCreated:*
+            Events:
+              - s3:ObjectCreated:*
 
   DynamoDbToExcelFunction:
     Type: AWS::Serverless::Function
