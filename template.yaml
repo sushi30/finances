@@ -37,8 +37,6 @@ Resources:
 
   InputFilesbucket:
     Type: AWS::S3::Bucket
-    Properties:
-      BucketName: input.files
 
   ExpensesQueue:
     Type: AWS::SQS::Queue
