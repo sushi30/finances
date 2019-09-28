@@ -17,7 +17,7 @@ Resources:
         NewFile:
           Type: S3
           Properties:
-            Bucket: !Ref InputFilesbucket
+            Bucket: !Ref InputFilesBucket
             Events:
               - s3:ObjectCreated:*
 
@@ -35,7 +35,7 @@ Resources:
         Name: id
         Type: Number
 
-  InputFilesbucket:
+  InputFilesBucket:
     Type: AWS::S3::Bucket
 
   ExpensesQueue:
