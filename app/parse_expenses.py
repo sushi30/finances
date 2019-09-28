@@ -12,5 +12,5 @@ def parse_file(bucket, key):
 
 def handler(event, context):
     for r in event["Records"]:
-        log.info(str(f))
+        log.info(str(r))
         parse_file(r["s3"]["bucket"]["name"], r["s3"]["object"]["key"])
