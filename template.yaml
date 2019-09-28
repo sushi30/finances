@@ -13,12 +13,12 @@ Resources:
     Properties:
       Handler: app.parse_expense_handlers
       CodeUri: build.zip
-    Events:
-      NewFile:
-        Type: S3
-        Properties:
-          Bucket: !Ref InputFilesbucket
-          Events: s3:ObjectCreated:*
+      Events:
+        NewFile:
+          Type: S3
+          Properties:
+            Bucket: !Ref InputFilesbucket
+            Events: s3:ObjectCreated:*
 
   DynamoDbToExcelFunction:
     Type: AWS::Serverless::Function
