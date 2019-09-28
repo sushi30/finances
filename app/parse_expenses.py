@@ -1,7 +1,9 @@
 def parse_file(bucket, key):
     switcher = {"leumicard": id}
     default = id
-    switcher.get(key.split("/")[0], default)(f"s3://{bucket}/{key}")
+    res = switcher.get(key.split("/")[0], default)(f"s3://{bucket}/{key}")
+    print(res)
+
 
 
 def handler(event, context):
