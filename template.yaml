@@ -25,7 +25,6 @@ Resources:
       Handler: app.handler
       CodeUri: build.zip
 
-
   ExpensesTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
