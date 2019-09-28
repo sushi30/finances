@@ -8,11 +8,23 @@ Globals:
     MemorySize: 128
 
 Resources:
-  TestFunction:
+  ParseExpenseFunction:
     Type: AWS::Serverless::Function
     Properties:
       Handler: app.handler
       CodeUri: build.zip
+      Events:
+        NewFile:
+          Type: S3
+          Properties:
+            Bucket: !Ref InputFilesbucket
+
+  DynamoDbToExcelFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.handler
+      CodeUri: build.zip
+
 
   ExpensesTable:
     Type: AWS::Serverless::SimpleTable

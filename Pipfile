@@ -7,6 +7,7 @@ verify_ssl = true
 
 [packages]
 zappa = "*"
+pandas = "*"
 
 [scripts]
 package = "zappa package dev -o build.zip"
