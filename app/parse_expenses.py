@@ -5,7 +5,6 @@ def parse_file(bucket, key):
     print(res)
 
 
-
 def handler(event, context):
     for r in event["Records"]:
         parse_file(r["s3"]["bucket"]["name"], r["s3"]["object"]["key"])
