@@ -1,3 +1,8 @@
+import logging
+
+log = logging.getLogger(__name__)
+
+
 def parse_file(bucket, key):
     switcher = {"leumicard": id}
     default = id
@@ -7,4 +12,5 @@ def parse_file(bucket, key):
 
 def handler(event, context):
     for r in event["Records"]:
+        log.info("r")
         parse_file(r["s3"]["bucket"]["name"], r["s3"]["object"]["key"])
