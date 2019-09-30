@@ -1,9 +1,7 @@
 import logging
-
 from app.models import FlowModel
 from helpers import get_leumicard
-from random import randint
-import pandas as pd
+from uuid import uuid4
 
 log = logging.getLogger(__name__)
 
@@ -20,15 +18,16 @@ def handler(event, context):
         df = parse_file(r["s3"]["bucket"]["name"], r["s3"]["object"]["key"])
         log.info(f"received {len(df)} rows of data")
         log.info(df.head(3))
-        for item in df.apply(
-            lambda x: FlowModel(
-                randint(1, 10 ** 10),
-                x.date.to_pydatetime(),
-                name=x["name"],
-                source=x.source,
-                details=x.details,
-                value=x.value,
-            ),
-            axis=1,
-        ).tolist():
-            item.save()
+        with FlowModel.batch_write() as batch:
+            for item in df.apply(
+                lambda x: FlowModel(
+                    str(uuid4()),
+                    date=x.date.to_pydatetime(),
+                    name=x["name"],
+                    source=x.source,
+                    details=x.details,
+                    value=x.value,
+                ),
+                axis=1,
+            ).tolist():
+                batch.save(item)

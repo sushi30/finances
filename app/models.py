@@ -8,8 +8,8 @@ class FlowModel(Model):
         table_name = os.getenv("EXPENSES_TABLE_NAME")
         region = "us-west-2"
 
-    id = NumberAttribute(hash_key=True)
-    date = UTCDateTimeAttribute(range_key=True)
+    id = UnicodeAttribute(hash_key=True)
+    date = UTCDateTimeAttribute()
     name = UnicodeAttribute()
     value = NumberAttribute()
     details = UnicodeAttribute(null=True)
