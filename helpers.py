@@ -25,13 +25,15 @@ def get_fibi(path):
 def get_leumicard(path):
     dfs = []
     for i in [0, 1]:
-        df = pd.read_excel("data/" + path, header=3, sheet_name=i)
-        df = df[df.columns[[0, 1, 5, 10]]]
-        df.columns = ["date", "name", "value", "details"]
-        dfs.append(df)
+        temp = pd.read_excel(path, header=3, sheet_name=i)
+        temp = temp[temp.columns[[0, 1, 5, 10]]]
+        temp.columns = ["date", "name", "value", "details"]
+        dfs.append(temp)
+    df = pd.concat(dfs)
     df.date = pd.to_datetime(df.date)
     df = df[["date", "name", "value", "details"]]
     df["source"] = "leumicard"
+    df["details"] = df.details.apply(lambda x: "" if pd.isna(x) else x)
     df.value = -df.value
     return df
 
@@ -76,6 +78,7 @@ def get_leumi(path):
             return datetime.strptime(x, "%d/%m/%y")
         else:
             return datetime(x.year, x.day, x.month)
+
     df = pd.read_excel("data/" + path)
     df = df[df.columns[[0, 1, 3, 4]]]
     df.columns = ["date", "name", "minus", "plus"]

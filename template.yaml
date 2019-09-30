@@ -29,11 +29,6 @@ Resources:
 
   ExpensesTable:
     Type: AWS::Serverless::SimpleTable
-    Properties:
-      TableName: expenses
-      PrimaryKey:
-        Name: id
-        Type: Number
 
   InputFilesBucket:
     Type: AWS::S3::Bucket

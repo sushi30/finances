@@ -4,10 +4,15 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
+pytest = "*"
+python-dotenv = "*"
 
 [packages]
 zappa = "*"
 pandas = "*"
+pynamodb = "*"
+xlrd = "*"
+s3fs = "*"
 
 [scripts]
 package = "zappa package dev -o build.zip"
