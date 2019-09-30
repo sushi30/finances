@@ -8,8 +8,7 @@ log = logging.getLogger(__name__)
 
 def parse_file(bucket, key):
     switcher = {"leumicard": get_leumicard}
-    default = lambda x: x
-    return switcher.get(key.split("/")[0], default)(f"s3://{bucket}/{key}")
+    return switcher[key.split("/")[0]](f"s3://{bucket}/{key}")
 
 
 def handler(event, context):
