@@ -30,6 +30,9 @@ Resources:
   ExpensesTable:
     Type: AWS::Serverless::SimpleTable
 
+  ExpenseMappings:
+    Type: AWS::Serverless::SimpleTable
+
   InputFilesBucket:
     Type: AWS::S3::Bucket
 

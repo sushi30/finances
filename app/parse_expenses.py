@@ -1,5 +1,5 @@
 import logging
-from app.models import FlowModel
+from app.models import CashFlow
 from helpers import get_leumicard
 from uuid import uuid4
 
@@ -17,9 +17,9 @@ def handler(event, context):
         df = parse_file(r["s3"]["bucket"]["name"], r["s3"]["object"]["key"])
         log.info(f"received {len(df)} rows of data")
         log.info(df.head(3))
-        with FlowModel.batch_write() as batch:
+        with CashFlow.batch_write() as batch:
             for item in df.apply(
-                lambda x: FlowModel(
+                lambda x: CashFlow(
                     str(uuid4()),
                     date=x.date.to_pydatetime(),
                     name=x["name"],

@@ -3,7 +3,7 @@ from pynamodb.models import Model
 import os
 
 
-class FlowModel(Model):
+class CashFlow(Model):
     class Meta:
         table_name = os.getenv("EXPENSES_TABLE_NAME")
         region = "us-west-2"

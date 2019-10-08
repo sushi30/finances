@@ -13,6 +13,7 @@ pandas = "*"
 pynamodb = "*"
 xlrd = "*"
 s3fs = "*"
+flask = "*"
 
 [scripts]
 package = "zappa package dev -o build.zip"
