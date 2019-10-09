@@ -1,6 +1,5 @@
+import json
 import os
-
-from flask import Flask, jsonify
 from flask_lambda import FlaskLambda
 
 app = FlaskLambda(__name__)
@@ -13,4 +12,4 @@ app.config.from_mapping(
 
 @app.route("/test")
 def test():
-    return jsonify("hello"), 200, {"Content-Type": "application/json"}
+    return json.dumps("hello"), 200, {"Content-Type": "application/json"}
