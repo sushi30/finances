@@ -13,4 +13,4 @@ app.config.from_mapping(
 
 @app.route("/test")
 def test():
-    return jsonify("hi")
+    return "hi", 200
