@@ -1,8 +1,10 @@
 import json
 import os
 from flask import Flask
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app)
 app.config.from_mapping(
     SECRET_KEY="dev",
     APP_NAME=os.environ.get("APP_NAME") or "Flask-Base",
