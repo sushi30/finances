@@ -13,4 +13,4 @@ app.config.from_mapping(
 
 @app.route("/test")
 def test():
-    return "hi", 200
+    return jsonify("hello"), 200, {"Content-Type": "application/json"}
