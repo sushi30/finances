@@ -38,4 +38,6 @@ def create_app(test_config=None):
     return app
 
 
-lambda_handler = create_app()
+if __name__ == "__main__":
+    app = create_app()
+    app.run()

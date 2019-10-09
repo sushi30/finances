@@ -23,7 +23,7 @@ Resources:
   ServerFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: app.server.lambda_handler
+      Handler: app.server
       CodeUri: build.zip
       Events:
         RestApi:
