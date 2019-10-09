@@ -1,1 +1,5 @@
-{"dev": {"app_function":  "app.app.app"}}
+{
+  "dev": {
+    "app_function": "app.app.app"
+  }
+}
