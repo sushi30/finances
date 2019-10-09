@@ -36,6 +36,7 @@ Resources:
       Environment:
         Variables:
           EXPENSES_TABLE: !Ref ExpensesTable
+          FLASK_ENV: production
           CASH_FLOW_MAPPING_TABLE: !Ref ExpenseMappings
 
   DynamoDbToExcelFunction:
