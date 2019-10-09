@@ -25,6 +25,7 @@ Resources:
     Properties:
       Handler: handler.lambda_handler
       CodeUri: build.zip
+      MemorySize: 192
       Events:
         RestApi:
           Type: Api
