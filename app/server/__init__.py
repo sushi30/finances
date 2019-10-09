@@ -1,18 +1,16 @@
 import os
-from flask import Flask, request
+from flask import request
 from flask_cors import CORS
+from flask_lambda import FlaskLambda
 from flask_restful import Api
-
 from app.server.resources.cash_flow import CashFlow
 from app.server.resources.cash_flow_mapping import CashFlowMapping
 
 
 def create_app(test_config=None):
     # create and configure the app
-    app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY="dev", SERVER_NAME="Flask-Base"
-    )
+    app = FlaskLambda(__name__, instance_relative_config=True)
+    app.config.from_mapping(SECRET_KEY="dev")
     CORS(app)
     api = Api(app)
     api.add_resource(CashFlowMapping, "/mapping/<string:uuid>", "/mapping")
@@ -40,4 +38,4 @@ def create_app(test_config=None):
     return app
 
 
-app = create_app()
+lambda_handler = create_app()
