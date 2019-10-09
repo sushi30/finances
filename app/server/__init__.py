@@ -1,10 +1,10 @@
-import json
 import os
-
 from flask import Flask
+from flask_cors import CORS
+from flask_restful import Api
 
-from app.models import CashFlow
-from app.util import date_json_converter
+from app.server.resources.cash_flow import CashFlow
+from app.server.resources.cash_flow_mapping import CashFlowMapping
 
 
 def create_app(test_config=None):
@@ -13,7 +13,10 @@ def create_app(test_config=None):
     app.config.from_mapping(
         SECRET_KEY="dev", DATABASE=os.path.join(app.instance_path, "flaskr.sqlite")
     )
-
+    CORS(app)
+    api = Api(app)
+    api.add_resource(CashFlowMapping, "/mapping/<string:uuid>", "/mapping")
+    api.add_resource(CashFlow, "/flow/<string:uuid>", "/flow")
     if test_config is None:
         # load the instance config, if it exists, when not testing
         app.config.from_pyfile("config.py", silent=True)
@@ -31,11 +34,7 @@ def create_app(test_config=None):
     def test():
         return "Hi!"
 
-    @app.route("/expenses")
-    def all_expenses():
-        return json.dumps(
-            [i.attribute_values for i in list(CashFlow.scan())],
-            default=date_json_converter,
-        )
-
     return app
+
+
+app = create_app()
