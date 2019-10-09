@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, request
 from flask_cors import CORS
 from flask_restful import Api
 
@@ -30,9 +30,12 @@ def create_app(test_config=None):
     except OSError:
         pass
 
-    @app.route("/test")
+    @app.route("/test", methods=["GET", "POST"])
     def test():
-        return "Hi!"
+        if request.method == "GET":
+            return "Hi!"
+        elif request.method == "POST":
+            return request.json
 
     return app
 
