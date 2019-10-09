@@ -1,1 +1,1 @@
-{"dev": {"app_function": "app.server"}}
+{"dev": {"app_function": "app.server.handler.app"}}
