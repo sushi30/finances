@@ -9,8 +9,10 @@ from app.server.resources.cash_flow_mapping import CashFlowMapping
 
 def create_app(test_config=None):
     # create and configure the app
-    app = FlaskLambda(__name__, instance_relative_config=True)
-    app.config.from_mapping(SECRET_KEY="dev")
+    app = FlaskLambda(__name__)
+    app.config.from_mapping(
+        SECRET_KEY="dev", APP_NAME=os.environ.get("APP_NAME") or "Flask-Base"
+    )
     CORS(app)
     api = Api(app)
     api.add_resource(CashFlowMapping, "/mapping/<string:uuid>", "/mapping")
