@@ -20,6 +20,7 @@ Resources:
             Bucket: !Ref InputFilesBucket
             Events:
               - s3:ObjectCreated:*
+
   ServerFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -34,7 +35,6 @@ Resources:
             Method: ANY
       Environment:
         Variables:
-          SERVER_NAME: Finance-App-Server
           EXPENSES_TABLE: !Ref ExpensesTable
           CASH_FLOW_MAPPING_TABLE: !Ref ExpenseMappings
 
