@@ -14,6 +14,7 @@ def create_app(test_config=None):
         SECRET_KEY="dev",
         APP_NAME=os.environ.get("APP_NAME") or "Flask-Base",
         FLASK_ENV=os.getenv("FLASK_ENV"),
+        DEBUG=os.getenv("DEBUG"),
     )
     CORS(app)
     api = Api(app)
