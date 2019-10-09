@@ -24,7 +24,7 @@ Resources:
   ServerFunction:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: handler.lambda_handler
+      Handler: app.app.app
       CodeUri: build.zip
       MemorySize: 192
       Events:
