@@ -22,18 +22,20 @@ Resources:
               - s3:ObjectCreated:*
               -
   ServerFunction:
-    Handler: app.server.app
-    CodeUri: build.zip
-    Events:
-      RestApi:
-        Type: Api
-        Properties:
-          Path: /{proxy+}
-          Method: ANY
-    Environment:
-      Variables:
-        EXPENSES_TABLE: !Ref ExpensesTable
-        CASH_FLOW_MAPPING_TABLE: !Ref ExpenseMappings
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.server.app
+      CodeUri: build.zip
+      Events:
+        RestApi:
+          Type: Api
+          Properties:
+            Path: /{proxy+}
+            Method: ANY
+      Environment:
+        Variables:
+          EXPENSES_TABLE: !Ref ExpensesTable
+          CASH_FLOW_MAPPING_TABLE: !Ref ExpenseMappings
 
   DynamoDbToExcelFunction:
     Type: AWS::Serverless::Function
