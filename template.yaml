@@ -26,7 +26,6 @@ Resources:
     Properties:
       Handler: app.app.app
       CodeUri: build.zip
-      MemorySize: 192
       Events:
         RestApi:
           Type: Api
