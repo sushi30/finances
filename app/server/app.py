@@ -24,7 +24,3 @@ def test():
         return "Hi!"
     elif request.method == "POST":
         return request.json
-
-
-if __name__ == "__main__":
-    app.run()
