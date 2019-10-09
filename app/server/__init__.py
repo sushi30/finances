@@ -1,7 +1,6 @@
 import os
-from flask import request
+from flask import request, Flask
 from flask_cors import CORS
-from flask_lambda import FlaskLambda
 from flask_restful import Api
 from app.server.resources.cash_flow import CashFlow
 from app.server.resources.cash_flow_mapping import CashFlowMapping
@@ -9,7 +8,7 @@ from app.server.resources.cash_flow_mapping import CashFlowMapping
 
 def create_app(test_config=None):
     # create and configure the app
-    app = FlaskLambda(__name__)
+    app = Flask(__name__)
     app.config.from_mapping(
         SECRET_KEY="dev", APP_NAME=os.environ.get("APP_NAME") or "Flask-Base"
     )
