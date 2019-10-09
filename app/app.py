@@ -11,4 +11,4 @@ app.config.from_mapping(
 
 @app.route("/test")
 def test():
-    return "hi"
+    return {"body": "hi"}
