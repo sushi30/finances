@@ -1,7 +1,5 @@
 import logging
-
 import pandas as pd
-
 from app.models import CashFlow
 from helpers import get_leumicard
 from uuid import uuid4
