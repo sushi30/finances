@@ -1,0 +1,26 @@
+{
+  "name": "finances",
+  "version": "1.0.0",
+  "description": "One Paragraph of project description goes here",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sushi30/finances.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sushi30/finances/issues"
+  },
+  "homepage": "https://github.com/sushi30/finances#readme",
+  "devDependencies": {
+    "serverless-python-requirements": "^5.0.0",
+    "serverless-wsgi": "^1.7.3"
+  }
+}

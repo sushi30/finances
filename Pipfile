@@ -8,7 +8,6 @@ pytest = "*"
 python-dotenv = "*"
 
 [packages]
-zappa = "*"
 pandas = "*"
 pynamodb = "*"
 xlrd = "*"
@@ -16,7 +15,6 @@ s3fs = "*"
 flask = "*"
 flask-restful = "*"
 flask-cors = "*"
-flask-lambda = "*"
 
 [scripts]
 package = "zappa package dev -o build.zip"
