@@ -39,7 +39,9 @@ functions:
           method: PUT
           path: /hello
           cors: true
-          authorizer: auth
+          authorizer:
+            name: auth
+            identitySource: method.request.header.access_token
 
 resources:
   Resources:
