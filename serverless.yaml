@@ -23,6 +23,10 @@ provider:
   region: us-west-2
 
 functions:
+  auth:
+    handler: auth/authorize.handler
+    cors: true
+
   app:
     handler: wsgi_handler.handler
     events:
@@ -30,9 +34,16 @@ functions:
       - http: 'ANY {proxy+}'
 
   hello:
-    handler: hello.main.handler.py
+    handler: hello/main.handler
     events:
       - http: GET /hello
+
+  putTest:
+    handler: hello/handlers.put
+    events:
+      - http: PUT /hello
+    ahtorizer:
+      auth
 
 resources:
   Resources:
