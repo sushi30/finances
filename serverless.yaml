@@ -1,15 +1,20 @@
-service: serverless-flask
+org: imriparan
+app: serverless-flask-app
+service: financeServer
 
 plugins:
   - serverless-python-requirements
   - serverless-wsgi
-
 custom:
   wsgi:
     app: app.app.app
     packRequirements: false
   pythonRequirements:
     dockerizePip: non-linux
+  defaultStage: dev
+  currentStage: ${opt:stage, self:custom.defaultStage}
+  userPoolName: test-user-pool-${self:custom.currentStage}
+  userPoolClientName: test-user-pool-client-${self:custom.currentStage}
 
 provider:
   name: aws
@@ -23,3 +28,44 @@ functions:
     events:
       - http: ANY /
       - http: 'ANY {proxy+}'
+
+  hello:
+    handler: hello.main.handler.py
+    events:
+      - http: GET /hello
+
+resources:
+  Resources:
+    CognitoUserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        MfaConfiguration: OFF
+        UserPoolName: ${self:custom.userPoolName}
+        UsernameAttributes:
+          - email
+        Policies:
+          PasswordPolicy:
+            MinimumLength: 6
+            RequireLowercase: False
+            RequireNumbers: True
+            RequireSymbols: False
+            RequireUppercase: True
+    CognitoUserPoolClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+        ClientName: ${self:custom.userPoolClientName}
+        GenerateSecret: False
+        UserPoolId:
+          Ref: CognitoUserPool
+    ApiGatewayAuthorizer:
+      DependsOn:
+        - ApiGatewayRestApi
+      Type: AWS::ApiGateway::Authorizer
+      Properties:
+        Name: cognito-authorizer
+        IdentitySource: method.request.header.Authorization
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        Type: COGNITO_USER_POOLS
+        ProviderARNs:
+          - Fn::GetAtt: [CognitoUserPool, Arn]

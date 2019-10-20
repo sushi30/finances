@@ -15,6 +15,7 @@ s3fs = "*"
 flask = "*"
 flask-restful = "*"
 flask-cors = "*"
+lambda-decorators = "*"
 
 [scripts]
 package = "zappa package dev -o build.zip"
