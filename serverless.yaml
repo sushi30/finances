@@ -42,13 +42,13 @@ functions:
             name: auth
             identitySource: method.request.header.access_token
 
-    login:
-      handler: auth/handlers.login
-      events:
-        - http:
-            method: POST
-            path: /login
-            cors: true
+  login:
+    handler: auth/handlers.login
+    events:
+      - http:
+          method: POST
+          path: /login
+          cors: true
 
 resources:
   Resources:
