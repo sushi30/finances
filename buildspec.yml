@@ -1,6 +1,6 @@
 version: 0.2
 
-environment:
+env:
   variables:
     SLS_DEBUG: 1
 
