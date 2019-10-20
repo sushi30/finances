@@ -1,5 +1,9 @@
 version: 0.2
 
+environment:
+  variables:
+    SLS_DEBUG: 1
+
 phases:
   install:
     runtime-versions:
