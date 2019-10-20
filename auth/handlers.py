@@ -9,7 +9,7 @@ def authorize(event, context):
 
 @cors_headers
 @load_json_body
-def sign_in(event, context):
+def login(event, context):
     if event["body"]["username"] == "demo" and event["body"]["password"] == "1234":
         return {"statusCode": 200, "token": "123454321"}
     else:
