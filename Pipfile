@@ -8,14 +8,12 @@ pytest = "*"
 python-dotenv = "*"
 
 [packages]
-pandas = "*"
 pynamodb = "*"
 xlrd = "*"
 s3fs = "*"
-flask = "*"
-flask-restful = "*"
-flask-cors = "*"
 lambda-decorators = "*"
+pyjwt = "*"
+cryptography = "*"
 
 [scripts]
 package = "zappa package dev -o build.zip"

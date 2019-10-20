@@ -4,11 +4,8 @@ service: financeServer
 
 plugins:
   - serverless-python-requirements
-  - serverless-wsgi
+
 custom:
-  wsgi:
-    app: app.app.app
-    packRequirements: false
   pythonRequirements:
     dockerizePip: non-linux
   defaultStage: dev
@@ -24,59 +21,79 @@ provider:
 
 functions:
   auth:
-    handler: auth/authorize.handler
+    handler: auth/handlers.authorize
     cors: true
 
-  app:
-    handler: wsgi_handler.handler
-    events:
-      - http: ANY /
-      - http: 'ANY {proxy+}'
-
   hello:
-    handler: hello/main.handler
+    handler: hello/handlers.get
     events:
-      - http: GET /hello
+      - http:
+          method: GET
+          path: /hello
+          cors: true
 
   putTest:
     handler: hello/handlers.put
     events:
-      - http: PUT /hello
-    ahtorizer:
-      auth
+      - http:
+          method: PUT
+          path: /hello
+          cors: true
+          authorizer: auth
 
 resources:
   Resources:
-    CognitoUserPool:
-      Type: AWS::Cognito::UserPool
+    #    CognitoUserPool:
+    #      Type: AWS::Cognito::UserPool
+    #      Properties:
+    #        MfaConfiguration: OFF
+    #        UserPoolName: ${self:custom.userPoolName}
+    #        UsernameAttributes:
+    #          - email
+    #        Policies:
+    #          PasswordPolicy:
+    #            MinimumLength: 6
+    #            RequireLowercase: False
+    #            RequireNumbers: True
+    #            RequireSymbols: False
+    #            RequireUppercase: True
+    #    CognitoUserPoolClient:
+    #      Type: AWS::Cognito::UserPoolClient
+    #      Properties:
+    #        ClientName: ${self:custom.userPoolClientName}
+    #        GenerateSecret: False
+    #        UserPoolId:
+    #          Ref: CognitoUserPool
+    #    ApiGatewayAuthorizer:
+    #      DependsOn:
+    #        - ApiGatewayRestApi
+    #      Type: AWS::ApiGateway::Authorizer
+    #      Properties:
+    #        Name: cognito-authorizer
+    #        IdentitySource: method.request.header.Authorization
+    #        RestApiId:
+    #          Ref: ApiGatewayRestApi
+    #        Type: COGNITO_USER_POOLS
+    #        ProviderARNs:
+    #          - Fn::GetAtt: [CognitoUserPool, Arn]
+    # This response is needed for custom authorizer failures cors support ¯\_(ツ)_/¯
+    GatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
       Properties:
-        MfaConfiguration: OFF
-        UserPoolName: ${self:custom.userPoolName}
-        UsernameAttributes:
-          - email
-        Policies:
-          PasswordPolicy:
-            MinimumLength: 6
-            RequireLowercase: False
-            RequireNumbers: True
-            RequireSymbols: False
-            RequireUppercase: True
-    CognitoUserPoolClient:
-      Type: AWS::Cognito::UserPoolClient
-      Properties:
-        ClientName: ${self:custom.userPoolClientName}
-        GenerateSecret: False
-        UserPoolId:
-          Ref: CognitoUserPool
-    ApiGatewayAuthorizer:
-      DependsOn:
-        - ApiGatewayRestApi
-      Type: AWS::ApiGateway::Authorizer
-      Properties:
-        Name: cognito-authorizer
-        IdentitySource: method.request.header.Authorization
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: EXPIRED_TOKEN
         RestApiId:
-          Ref: ApiGatewayRestApi
-        Type: COGNITO_USER_POOLS
-        ProviderARNs:
-          - Fn::GetAtt: [CognitoUserPool, Arn]
+          Ref: 'ApiGatewayRestApi'
+        StatusCode: '401'
+    AuthFailureGatewayResponse:
+      Type: 'AWS::ApiGateway::GatewayResponse'
+      Properties:
+        ResponseParameters:
+          gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
+          gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
+        ResponseType: UNAUTHORIZED
+        RestApiId:
+          Ref: 'ApiGatewayRestApi'
+        StatusCode: '401'

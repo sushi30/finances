@@ -2,24 +2,21 @@ version: 0.2
 
 phases:
   install:
+    runtime-versions:
+      nodejs: 10
+      python: 3.7
     commands:
-      - python -V
-      - pip install -U pip setuptools awscli pipenv
+      - pip install -U pip pipenv
+      - npm install serverless -g
   pre_build:
     commands:
-      - pipenv install --deploy
-  build:
-    commands:
-      - pipenv run package
+      - npm install --dev
+      - pipenv install --production
   post_build:
     commands:
-      - aws cloudformation package --template-file template.yaml --output-template-file packaged.yaml --s3-bucket imri.codebuild.artifacts
-      - cat packaged.yaml
-      - echo Build completed on `date`
-artifacts:
-  files:
-    - packaged.yaml
-  discard-paths: yes
+      - sls deploy --stage dev
+
 cache:
   paths:
     - ~/.cache/pip/**/*
+    - ./node_modules/**/*
