@@ -1,4 +1,4 @@
-from lambda_decorators import json_http_resp, cors_headers
+from lambda_decorators import json_http_resp, cors_headers, dump_json_body
 
 
 @cors_headers
