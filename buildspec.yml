@@ -14,6 +14,7 @@ phases:
       - pipenv install
   post_build:
     commands:
+      - serverlesss login
       - serverless deploy --stage dev
 
 cache:
