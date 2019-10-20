@@ -1,5 +1,4 @@
 org: imriparan
-app: serverless-flask-app
 service: financeServer
 
 plugins:
