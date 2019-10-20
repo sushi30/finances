@@ -30,6 +30,8 @@ def write_cash_flows_to_db(cash_flows: pd.DataFrame):
             axis=1,
         ).tolist():
             batch.save(item)
+
+
 def process_file(bucket, key):
     queue = boto3.resource("sqs").Queue(os.getenv("QUEUE_URL"))
     df = parse_file(bucket, key)
@@ -53,18 +55,3 @@ def process_file(bucket, key):
     queue.send_message(MessageBody=json.dumps(ids))
 
 
-def handler(event, context):
-    for r in event["Records"]:
-        log.info(str(r))
-        bucket = r["s3"]["bucket"]["name"]
-        key = r["s3"]["object"]["key"]
-        process_file(bucket, key)
-
-
-def handler(event, context):
-    for r in event["Records"]:
-        log.info(str(r))
-        df = parse_file(r["s3"]["bucket"]["name"], r["s3"]["object"]["key"])
-        log.info(f"received {len(df)} rows of data")
-        log.info(df.head(3))
-        write_cash_flows_to_db(df)
