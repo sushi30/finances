@@ -11,7 +11,7 @@ phases:
   pre_build:
     commands:
       - npm install --dev
-      - pipenv install --production
+      - pipenv install
   post_build:
     commands:
       - sls deploy --stage dev
