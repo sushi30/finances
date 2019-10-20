@@ -11,6 +11,6 @@ def authorize(event, context):
 @load_json_body
 def login(event, context):
     if event["body"]["username"] == "demo" and event["body"]["password"] == "1234":
-        return {"statusCode": 200, "token": "123454321"}
+        return {"statusCode": 200, "body": json.dumps({"token": "123454321"})}
     else:
         return {"statusCode": 403}
