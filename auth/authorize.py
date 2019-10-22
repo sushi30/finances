@@ -1,5 +1,6 @@
 import jwt
 from auth import PRIVATE_KEY
+from util import get_secret
 
 
 def auth(token):
