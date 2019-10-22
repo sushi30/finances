@@ -1,17 +1,9 @@
-import json
 import os
 from datetime import datetime
-
 import jwt
-
 from cryptography.hazmat.backends import default_backend
 from cryptography.x509 import load_pem_x509_certificate
-
-# Set by serverless.yml
 from auth import PRIVATE_KEY
-
-AUTH0_CLIENT_ID = os.getenv("AUTH0_CLIENT_ID")
-AUTH0_CLIENT_PUBLIC_KEY = os.getenv("AUTH0_CLIENT_PUBLIC_KEY")
 
 
 def auth(token):
@@ -20,8 +12,6 @@ def auth(token):
 
 def jwt_verify(auth_token):
     payload = jwt.decode(auth_token, PRIVATE_KEY, algorithms=["HS256"])
-    if payload["exp"] < datetime.utcnow().timestamp():
-        raise Exception("expired token")
     return payload["sub"]
 
 
