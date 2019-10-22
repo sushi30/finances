@@ -128,4 +128,4 @@ resources:
           SecretStringTemplate: '{}'
           GenerateStringKey: "key"
           PasswordLength: 30
-          ExcludeCharacters: '"@/\'
+          ExcludeCharacters: '!"#$%&()*+,-/:;<=>?@[\]^_`{|}~\"'
