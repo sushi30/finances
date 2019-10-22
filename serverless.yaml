@@ -32,6 +32,9 @@ functions:
             - PUT
           path: /cash
           cors: true
+          authorizer:
+            name: auth
+            identitySource: method.request.header.access_token
 
   hello:
     handler: hello/handlers.get
