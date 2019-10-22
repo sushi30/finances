@@ -12,6 +12,6 @@ def login(username, password):
             PRIVATE_KEY,
             algorithm="HS256",
         )
-        return str(token)
+        return token.decode()
     else:
         raise Exception("forbidden")
