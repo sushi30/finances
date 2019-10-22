@@ -7,25 +7,20 @@ from lambda_decorators import (
 from app.resources import cash_flow, cash_flow_mapping
 
 
-def put_decorators(func):
+def decorators(func):
     return cors_headers()(load_json_body((json_http_resp(func))))
-
-
-def get_decorators(func):
-    return cors_headers()(load_json_body((dump_json_body(func))))
 
 
 class CashFlow:
     @classmethod
     def handler(cls, event, context):
         method = event["httpMethod"]
-        return get_decorators(cls(event, context).__getattribute__(method))()
+        return decorators(cls(event, context).__getattribute__(method))()
 
     def __init__(self, event, context):
         self.event = event
         self.context = context
 
-    @get_decorators
     def get(self):
         uuid = self.event["queryStringParameters"].get("id")
         return cash_flow.get(uuid)
@@ -34,13 +29,13 @@ class CashFlow:
         cash_flow.put(None)
 
 
-@get_decorators
+@decorators
 def get_cash_flow_mapping(event, context):
     uuid = event["queryParameters"].get("id")
     return cash_flow_mapping.get(uuid)
 
 
-@put_decorators
+@decorators
 def put_cash_flow_mapping(event, context):
     category, cash_flow_id, name, source = (
         event["body"].get(k) for k in ("category", "cashFlowId", "name", "source")
