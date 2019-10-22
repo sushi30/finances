@@ -4,12 +4,12 @@ from util import get_secret
 
 
 def auth(token):
+    if token == get_secret("finance/master/key")["key"]:
+        return "admin"
     return jwt_verify(token)
 
 
 def jwt_verify(auth_token):
-    if auth_token == get_secret("finance/master/key")["key"]:
-        return "admin"
     payload = jwt.decode(auth_token, PRIVATE_KEY, algorithms=["HS256"])
     return payload["sub"]
 
