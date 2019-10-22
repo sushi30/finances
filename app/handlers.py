@@ -15,15 +15,22 @@ def get_decorators(func):
     return cors_headers()(load_json_body((dump_json_body(func))))
 
 
-@get_decorators
-def get_cash_flow(event, context):
-    uuid = event["queryParameters"].get("id")
-    return cash_flow.get(uuid)
+class CashFlow:
+    @classmethod
+    def handler(cls, event, context):
+        method = event["httpMethod"]
+        return cls(event, context).__getattribute__(method)()
 
+    def __init__(self, event, context):
+        self.event = event
+        self.context = context
 
-@put_decorators
-def put_cash_flow(event, context):
-    return cash_flow.put(None)
+    def get(self):
+        uuid = self.event["queryStringParameters"].get("id")
+        return cash_flow.get(uuid)
+
+    def put(self):
+        cash_flow.put(None)
 
 
 @get_decorators

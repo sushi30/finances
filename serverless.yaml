@@ -23,6 +23,16 @@ functions:
     handler: auth/handlers.authorize
     cors: true
 
+  getCashFlow:
+    handler: app/resource/CashFlow.handler
+    events:
+      - http:
+          method:
+            - GET
+            - PUT
+          path: /cash
+          cors: true
+
   hello:
     handler: hello/handlers.get
     events:
