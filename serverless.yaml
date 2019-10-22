@@ -27,9 +27,7 @@ functions:
     handler: app/resource/CashFlow.handler
     events:
       - http:
-          method:
-            - GET
-            - PUT
+          method: any
           path: /cash
           cors: true
           authorizer:

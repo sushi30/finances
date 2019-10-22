@@ -19,12 +19,13 @@ class CashFlow:
     @classmethod
     def handler(cls, event, context):
         method = event["httpMethod"]
-        return cls(event, context).__getattribute__(method)()
+        return get_decorators(cls(event, context).__getattribute__(method))()
 
     def __init__(self, event, context):
         self.event = event
         self.context = context
 
+    @get_decorators
     def get(self):
         uuid = self.event["queryStringParameters"].get("id")
         return cash_flow.get(uuid)
