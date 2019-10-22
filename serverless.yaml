@@ -119,3 +119,13 @@ resources:
         RestApiId:
           Ref: 'ApiGatewayRestApi'
         StatusCode: '401'
+    MasterToken:
+      Type: AWS::SecretsManager::Secret
+      Properties:
+        Name: 'finance/master/key'
+        Description: "Master token for the backend api. Works only in staging."
+        GenerateSecretString:
+          SecretStringTemplate: '{}'
+          GenerateStringKey: "key"
+          PasswordLength: 30
+          ExcludeCharacters: '"@/\'
