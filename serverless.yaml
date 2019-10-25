@@ -44,7 +44,6 @@ functions:
   auth:
     handler: auth/handlers.authorize
     cors: true
-    role: authRole
 
   getCashFlow:
     handler: app/handlers.get_cash_flows
