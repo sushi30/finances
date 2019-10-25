@@ -49,7 +49,7 @@ functions:
             identitySource: method.request.header.access_token
 
   getCashFlowMappings:
-    handler: app/handlers.get_cash_flows
+    handler: app/handlers.get_cash_flow_mapping
     events:
       - http:
           method: get
@@ -60,7 +60,7 @@ functions:
             identitySource: method.request.header.access_token
 
   putCashFlowMappings:
-    handler: app/handlers.put_cash_flows
+    handler: app/handlers.put_cash_flow_mapping
     events:
       - http:
           method: put
