@@ -42,7 +42,7 @@ functions:
     events:
       - http:
           method: put
-          path: /cash
+          path: /mapping
           cors: true
           authorizer:
             name: auth
@@ -53,7 +53,7 @@ functions:
     events:
       - http:
           method: get
-          path: /cash
+          path: /mapping
           cors: true
           authorizer:
             name: auth
