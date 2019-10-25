@@ -13,7 +13,7 @@ flask-cors = "*"
 [packages]
 pynamodb = "*"
 xlrd = "*"
-s3fs = "*"
+s3fs = "*"X
 lambda-decorators = "*"
 pyjwt = "*"
 cryptography = "*"
