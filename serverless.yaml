@@ -19,6 +19,26 @@ provider:
   region: us-west-2
   memorySize: 128
   timeout: 3
+  environment:
+    CASH_FLOW_TABLE: cash-table-${self:service}-${opt:stage, self:provider.stage}
+    CASH_FLOW_MAPPING_TABLE: mapping-table-${self:service}-${opt:stage, self:provider.stage}
+    MASTER_SECRET: finance/master/key
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource:
+      - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.CASH_FLOW_TABLE}"
+      - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.CASH_FLOW_MAPPING_TABLE}"
+    - Effect: Allow
+      Action:
+        - secretsmanager:GetSecretValue
+      Resource: "arn:aws:secretsmanager:${opt:region, self:provider.region}:*:${self:provider.environment.MASTER_KEY}"
 
 functions:
   auth:
@@ -157,25 +177,25 @@ resources:
     MasterToken:
       Type: AWS::SecretsManager::Secret
       Properties:
-        Name: 'finance/master/key'
+        Name: ${self:provider.environment.MASTER_KEY}
         Description: "Master token for the backend api. Works only in staging."
         GenerateSecretString:
           SecretStringTemplate: '{}'
           GenerateStringKey: "key"
           PasswordLength: 30
           ExcludeCharacters: '!"#$%&()*+,-/:;<=>?@[\]^_`{|}~\"'
-    Resources:
-      TodosDynamoDbTable:
-        Type: 'AWS::DynamoDB::Table'
-        DeletionPolicy: Retain
-        Properties:
-          AttributeDefinitions:
-            - AttributeName: id
-              AttributeType: S
-          KeySchema:
-            - AttributeName: id
-              KeyType: HASH
-          ProvisionedThroughput:
-            ReadCapacityUnits: 1
-            WriteCapacityUnits: 1
-          TableName: ${self:provider.environment.DYNAMODB_TABLE}
+    CashFlowTable:
+      Type: AWS::Serverless::SimpleTable
+      Properties:
+        PrimaryKey:
+          Name: id
+          Type: String
+        TableName: ${self:provider.environment.CASH_FLOW_TABLE}
+    CashFlowMappingTable:
+      Type: AWS::Serverless::SimpleTable
+      Properties:
+        PrimaryKey:
+          Name: id
+          Type: String
+        TableName: ${self:provider.environment.CASH_FLOW_MAPPING_TABLE}
+    
