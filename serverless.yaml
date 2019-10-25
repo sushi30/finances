@@ -33,12 +33,12 @@ provider:
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
       Resource:
-      - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.CASH_FLOW_TABLE}"
-      - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.CASH_FLOW_MAPPING_TABLE}"
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.CASH_FLOW_TABLE}"
+        - "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:provider.environment.CASH_FLOW_MAPPING_TABLE}"
     - Effect: Allow
       Action:
         - secretsmanager:GetSecretValue
-      Resource: "arn:aws:secretsmanager:${opt:region, self:provider.region}:*:${self:provider.environment.MASTER_KEY}"
+      Resource: "arn:aws:secretsmanager:${opt:region, self:provider.region}:*:${self:provider.environment.MASTER_SECRET}"
 
 functions:
   auth:
@@ -119,41 +119,6 @@ functions:
 
 resources:
   Resources:
-    authRole:
-    #    CognitoUserPool:
-    #      Type: AWS::Cognito::UserPool
-    #      Properties:
-    #        MfaConfiguration: OFF
-    #        UserPoolName: ${self:custom.userPoolName}
-    #        UsernameAttributes:
-    #          - email
-    #        Policies:
-    #          PasswordPolicy:
-    #            MinimumLength: 6
-    #            RequireLowercase: False
-    #            RequireNumbers: True
-    #            RequireSymbols: False
-    #            RequireUppercase: True
-    #    CognitoUserPoolClient:
-    #      Type: AWS::Cognito::UserPoolClient
-    #      Properties:
-    #        ClientName: ${self:custom.userPoolClientName}
-    #        GenerateSecret: False
-    #        UserPoolId:
-    #          Ref: CognitoUserPool
-    #    ApiGatewayAuthorizer:
-    #      DependsOn:
-    #        - ApiGatewayRestApi
-    #      Type: AWS::ApiGateway::Authorizer
-    #      Properties:
-    #        Name: cognito-authorizer
-    #        IdentitySource: method.request.header.Authorization
-    #        RestApiId:
-    #          Ref: ApiGatewayRestApi
-    #        Type: COGNITO_USER_POOLS
-    #        ProviderARNs:
-    #          - Fn::GetAtt: [CognitoUserPool, Arn]
-    # This response is needed for custom authorizer failures cors support ¯\_(ツ)_/¯
     GatewayResponse:
       Type: 'AWS::ApiGateway::GatewayResponse'
       Properties:
@@ -177,7 +142,7 @@ resources:
     MasterToken:
       Type: AWS::SecretsManager::Secret
       Properties:
-        Name: ${self:provider.environment.MASTER_KEY}
+        Name: ${self:provider.environment.MASTER_SECRET}
         Description: "Master token for the backend api. Works only in staging."
         GenerateSecretString:
           SecretStringTemplate: '{}'
@@ -198,4 +163,3 @@ resources:
           Name: id
           Type: String
         TableName: ${self:provider.environment.CASH_FLOW_MAPPING_TABLE}
-    
