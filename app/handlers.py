@@ -1,9 +1,4 @@
-from lambda_decorators import (
-    cors_headers,
-    load_json_body,
-    json_http_resp,
-    dump_json_body,
-)
+from lambda_decorators import cors_headers, load_json_body, json_http_resp
 from app.resources import cash_flow, cash_flow_mapping
 
 
@@ -11,22 +6,10 @@ def decorators(func):
     return cors_headers()(load_json_body((json_http_resp(func))))
 
 
-class CashFlow:
-    @classmethod
-    def handler(cls, event, context):
-        method = event["httpMethod"]
-        return decorators(cls(event, context).__getattribute__(method))()
-
-    def __init__(self, event, context):
-        self.event = event
-        self.context = context
-
-    def get(self):
-        uuid = self.event["queryStringParameters"].get("id")
-        return cash_flow.get(uuid)
-
-    def put(self):
-        cash_flow.put(None)
+@decorators
+def get_cash_flows(event, context):
+    uuid = event["queryStringParameters"].get("id")
+    return cash_flow.get(uuid)
 
 
 @decorators

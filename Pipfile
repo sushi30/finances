@@ -7,6 +7,8 @@ verify_ssl = true
 pytest = "*"
 python-dotenv = "*"
 pytest-freezegun = "*"
+flask = "*"
+flask-cors = "*"
 
 [packages]
 pynamodb = "*"
