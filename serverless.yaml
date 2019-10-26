@@ -45,23 +45,12 @@ functions:
     handler: auth/handlers.authorize
     cors: true
 
-  getCashFlow:
-    handler: app/handlers.get_cash_flows
+  cashFlow:
+    handler: app/handlers.cash_flows
     events:
       - http:
-          method: get
+          method: any
           path: /cash
-          cors: true
-          authorizer:
-            name: auth
-            identitySource: method.request.header.access_token
-
-  putCashFlow:
-    handler: app/handlers.put_cash_flows
-    events:
-      - http:
-          method: put
-          path: /mapping
           cors: true
           authorizer:
             name: auth
