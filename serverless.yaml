@@ -149,7 +149,7 @@ functions:
 resources:
   Resources:
     GatewayResponse:
-      Type: 'AWS::ApiGateway::GatewayResponse'
+      Type: AWS::ApiGateway::GatewayResponse
       Properties:
         ResponseParameters:
           gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
@@ -159,7 +159,7 @@ resources:
           Ref: ApiGatewayRestApi
         StatusCode: '401'
     AuthFailureGatewayResponse:
-      Type: 'AWS::ApiGateway::GatewayResponse'
+      Type: AWS::ApiGateway::GatewayResponse
       Properties:
         ResponseParameters:
           gatewayresponse.header.Access-Control-Allow-Origin: "'*'"
