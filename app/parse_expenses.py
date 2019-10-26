@@ -52,5 +52,3 @@ def process_file(bucket, key):
             ids.append(item.id)
             batch.save(item)
     queue.send_message(MessageBody=json.dumps(ids))
-
-
