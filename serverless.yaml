@@ -149,16 +149,25 @@ resources:
           PasswordLength: 30
           ExcludeCharacters: '!"#$%&()*+,-/:;<=>?@[\]^_`{|}~\"'
     CashFlowTable:
-      Type: AWS::Serverless::SimpleTable
+      Type: AWS::DynamoDB::Table
       Properties:
-        PrimaryKey:
-          Name: id
-          Type: String
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: D
+          - AttributeName: date
+            AttributeType: N
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+          - AttributeName: date
+            KeyType: RANGE
         TableName: ${self:provider.environment.CASH_FLOW_TABLE}
     CashFlowMappingTable:
-      Type: AWS::Serverless::SimpleTable
+      Type: AWS::DynamoDB::Table
       Properties:
-        PrimaryKey:
-          Name: id
-          Type: String
+        - AttributeName: id
+          AttributeType: D
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
         TableName: ${self:provider.environment.CASH_FLOW_MAPPING_TABLE}
