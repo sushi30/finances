@@ -17,7 +17,7 @@ phases:
       - npm install --only=dev
   post_build:
     commands:
-      - serverless deploy --stage dev
+      - serverless deploy --stage dev -v
 
 cache:
   paths:
