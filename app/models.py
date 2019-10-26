@@ -14,7 +14,7 @@ class MyModel(Model):
         )
 
     @classmethod
-    def dumps(cls):
+    def to_records(cls):
         return json.loads(
             json.dumps(
                 [i.attribute_values for i in list(cls.scan())][:10],

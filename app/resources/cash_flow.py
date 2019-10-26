@@ -6,7 +6,7 @@ class CashFlow(Resource):
     def get(self):
         uuid = self.event["queryStringParameters"].get("id")
         if uuid is None:
-            return CashFlowModel.dumps()
+            return CashFlowModel.to_records()
 
     def put(*args, **kwargs):
         raise NotImplementedError()
