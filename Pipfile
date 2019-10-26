@@ -19,6 +19,7 @@ pyjwt = "*"
 cryptography = "*"
 pandas = "*"
 cashflow = "*"
+marshmallow = "*"
 
 [requires]
 python_version = "3.7"

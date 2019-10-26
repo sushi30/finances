@@ -1,5 +1,10 @@
 from app.models import CashFlow as CashFlowModel
 from shared.resource import Resource
+from marhmallow import Schema, fields
+
+
+class GetCashFlowSchema(Schema):
+    id = fields.String(missing=None)
 
 
 class CashFlow(Resource):
@@ -14,7 +19,7 @@ class CashFlow(Resource):
             ]
         else:
             item = next(CashFlowModel.query(hash_key=uuid)).attribute_values
-            return {**o, "date": o["date"].isoformat(), **item}
+            return {**item, "date": item["date"].isoformat()}
 
     def put(*args, **kwargs):
         raise NotImplementedError()
