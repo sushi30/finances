@@ -30,7 +30,7 @@ class Resource:
         except Exception as exception:
             response = {"statusCode": 500, "body": str(exception)}
         response["headers"] = {"Access-Control-Allow-Origin": "*"}
-        log.debug("response: " + response)
+        log.debug("response: " + str(response))
         return response
 
 
