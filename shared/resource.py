@@ -22,8 +22,8 @@ class Resource:
         try:
             res = cls(event, context).__getattribute__(http_method)()
             response = {"statusCode": 200, "body": json.dumps(res)}
+            log.debug("response: " + str(response))
+            return response
         except Exception as exception:
             traceback.print_exc()
-            response = {"statusCode": 500, "body": str(exception)}
-        log.debug("response: " + str(response))
-        return response
+            return {"statusCode": 500, "body": str(exception)}
