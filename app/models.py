@@ -17,7 +17,7 @@ class MyModel(Model):
     def dumps(cls):
         return json.loads(
             json.dumps(
-                [i.attribute_values for i in list(cls.scan())],
+                [i.attribute_values for i in list(cls.scan())][:10],
                 default=date_json_converter,
             )
         )
