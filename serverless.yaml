@@ -65,7 +65,7 @@ provider:
         - s3:PutObjectVersionAcl
         - s3:PutObjectVersionTagging
       Effect: Allow
-      Resource: arn:aws:s3:::${self:service}.${opt:stage, self:provider.stage}.*/*
+      Resource: arn:aws:s3:::${self:service}.${self:provider.environment.USER_FILES_BUCKET}/*
 
 functions:
   auth:

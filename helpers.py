@@ -1,8 +1,11 @@
 import json
+import logging
 from datetime import datetime
-
 import pandas as pd
+from app import LOG_LEVEL
 
+log = logging.getLogger(__name__)
+log.setLevel(LOG_LEVEL)
 
 # noinspection PyTypeChecker
 def get_fibi(path):
@@ -23,6 +26,7 @@ def get_fibi(path):
 
 # noinspection PyTypeChecker
 def get_leumicard(path):
+    log.debug("received path: " + str(path))
     dfs = []
     for i in [0, 1]:
         temp = pd.read_excel(path, header=3, sheet_name=i)
