@@ -1,7 +1,13 @@
 import json
+import logging
 
 from lambda_decorators import cors_headers, load_json_body, json_http_resp
+
+from app import LOG_LEVEL
 from app.resources import cash_flow, cash_flow_mapping
+
+log = logging.getLogger(__name__)
+log.setLevel(LOG_LEVEL)
 
 
 def decorators(func):
@@ -16,14 +22,15 @@ class Resource:
 
     @classmethod
     def handler(cls, event, context):
+        log.debug("received event: " + json.dumps(event))
         http_method = event["httpMethod"].lower()
         try:
             res = cls(event, context).__getattribute__(http_method)()
             response = {"statusCode": 200, "body": json.dumps(res)}
         except Exception as exception:
             response = {"statusCode": 500, "body": str(exception)}
-
         response["headers"] = {"Access-Control-Allow-Origin": "*"}
+        log.debug("response: " + response)
         return response
 
 

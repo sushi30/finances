@@ -27,7 +27,7 @@ class MyModel(Model):
 
 class CashFlow(MyModel):
     class Meta:
-        table_name = os.getenv("EXPENSES_TABLE")
+        table_name = os.getenv("CASH_FLOW_TABLE")
         region = "us-west-2"
         if os.getenv("ENV") == "LOCAL":
             host = "http://localhost:8000"
