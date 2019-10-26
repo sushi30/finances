@@ -84,7 +84,17 @@ functions:
       - http:
           method: any
           path: /cash
-          cors: true
+          cors:
+            origin: '*' # <-- Specify allowed origin
+            headers: # <-- Specify allowed headers
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - acess_token
+            allowCredentials: false
           authorizer:
             name: auth
             identitySource: method.request.header.access_token
