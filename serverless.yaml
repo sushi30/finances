@@ -134,7 +134,7 @@ resources:
           SecretStringTemplate: '{}'
           GenerateStringKey: "key"
           PasswordLength: 30
-          ExcludeCharacters: '!"#$%&()*+,-/:;<=>?@[\]^_`{|}~\"'
+          ExcludeCharacters: '!#$%&()*+,-/:;<=>?@[\]^_`{|}~\"'
     CashFlowTable:
       Type: AWS::DynamoDB::Table
       Properties:
