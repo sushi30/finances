@@ -1,9 +1,7 @@
-import json
+import os
 from uuid import uuid4
 from pynamodb.attributes import UnicodeAttribute, NumberAttribute, UTCDateTimeAttribute
 from pynamodb.models import Model
-import os
-from app.util import date_json_converter
 
 
 class MyModel(Model):
@@ -15,12 +13,7 @@ class MyModel(Model):
 
     @classmethod
     def to_records(cls):
-        return json.loads(
-            json.dumps(
-                [i.attribute_values for i in list(cls.scan())][:10],
-                default=date_json_converter,
-            )
-        )
+        return [i.attribute_values for i in list(cls.scan())][:10]
 
 
 class CashFlow(MyModel):
