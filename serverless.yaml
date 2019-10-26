@@ -34,11 +34,11 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:service}-${opt:stage, self:provider.stage}-*"
+      Resource: arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:service}-${opt:stage, self:provider.stage}-*
     - Effect: Allow
       Action:
         - secretsmanager:GetSecretValue
-      Resource: "arn:aws:secretsmanager:${opt:region, self:provider.region}:*:secret:${self:service}-${opt:stage, self:provider.stage}-*"
+      Resource: arn:aws:secretsmanager:${opt:region, self:provider.region}:*:secret:${self:service}-${opt:stage, self:provider.stage}-*
     - Action:
         - s3:*
       Effect: Allow
