@@ -9,6 +9,7 @@ python-dotenv = "*"
 pytest-freezegun = "*"
 flask = "*"
 flask-cors = "*"
+click = "*"
 
 [packages]
 pynamodb = "*"

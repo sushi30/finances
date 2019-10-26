@@ -79,7 +79,7 @@ functions:
     cors: true
 
   cashFlow:
-    handler: app/handlers.cash_flow
+    handler: app/handlers.cash_flow_handler
     events:
       - http:
           method: any

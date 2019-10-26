@@ -19,7 +19,7 @@ class CashFlow(Resource):
         return cash_flow.get(uuid)
 
 
-cash_flow = CashFlow.handler
+cash_flow_handler = CashFlow.handler
 
 
 @decorators
