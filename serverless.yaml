@@ -126,7 +126,7 @@ resources:
           gatewayresponse.header.Access-Control-Allow-Headers: "'*'"
         ResponseType: EXPIRED_TOKEN
         RestApiId:
-          Ref: 'ApiGatewayRestApi'
+          Ref: ApiGatewayRestApi
         StatusCode: '401'
     AuthFailureGatewayResponse:
       Type: 'AWS::ApiGateway::GatewayResponse'
@@ -137,7 +137,7 @@ resources:
         ResponseType: UNAUTHORIZED
         RestApiId:
           Ref: 'ApiGatewayRestApi'
-        StatusCode: '401'
+        StatusCode: 401
     MasterToken:
       Type: AWS::SecretsManager::Secret
       Properties:
@@ -161,13 +161,16 @@ resources:
             KeyType: HASH
           - AttributeName: date
             KeyType: RANGE
+        BillingMode: PAY_PER_REQUEST
         TableName: ${self:provider.environment.CASH_FLOW_TABLE}
     CashFlowMappingTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        - AttributeName: id
-          AttributeType: D
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: D
         KeySchema:
           - AttributeName: id
             KeyType: HASH
+        BillingMode: PAY_PER_REQUEST
         TableName: ${self:provider.environment.CASH_FLOW_MAPPING_TABLE}

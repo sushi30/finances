@@ -7,9 +7,13 @@ def decorators(func):
 
 
 @decorators
-def get_cash_flows(event, context):
-    uuid = event["queryStringParameters"].get("id")
-    return cash_flow.get(uuid)
+def cash_flows(event, context):
+    method = event["httpMethod"].lower()
+    if method == "get":
+        uuid = event["queryStringParameters"].get("id")
+        return cash_flow.get(uuid)
+    else:
+        raise
 
 
 @decorators
