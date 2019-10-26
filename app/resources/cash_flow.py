@@ -1,10 +1,10 @@
 from app.models import CashFlow as CashFlowModel
 
 
-def get(self, uuid=None):
+def get(uuid=None):
     if uuid is None:
         return CashFlowModel.dumps()
 
 
-def put(data):
-    raise
+def put(*args, **kwargs):
+    raise NotImplementedError()
