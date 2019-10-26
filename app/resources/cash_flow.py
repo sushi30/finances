@@ -15,7 +15,7 @@ class GetCashFlowSchema(Schema):
 
 class CashFlow(Resource):
     def get(self):
-        uuid, page, key, size = GetCashFlowSchema.load(
+        uuid, page, key, page_size = GetCashFlowSchema.load(
             self.event["queryStringParameters"]
         )
         if uuid is None:
