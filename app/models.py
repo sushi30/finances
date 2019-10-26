@@ -13,14 +13,14 @@ class MyModel(Model):
             read_capacity_units=1, write_capacity_units=1, wait=True
         )
 
-    # @classmethod
-    # def dumps(cls):
-    #     return json.loads(
-    #         json.dumps(
-    #             [i.attribute_values for i in list(cls.scan())],
-    #             default=date_json_converter,
-    #         )
-    #     )
+    @classmethod
+    def dumps(cls):
+        return json.loads(
+            json.dumps(
+                [i.attribute_values for i in list(cls.scan())],
+                default=date_json_converter,
+            )
+        )
 
 
 class CashFlow(MyModel):
