@@ -2,7 +2,6 @@ import json
 import logging
 import os
 import boto3
-from app.models import FlowModel
 import pandas as pd
 from app.models import CashFlow
 from helpers import get_leumicard

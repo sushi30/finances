@@ -27,8 +27,6 @@ class CashFlow(MyModel):
     class Meta:
         table_name = os.getenv("CASH_FLOW_TABLE")
         region = "us-west-2"
-        if os.getenv("ENV") == "LOCAL":
-            host = "http://localhost:8000"
 
     id = UnicodeAttribute(hash_key=True)
     date = UTCDateTimeAttribute()
@@ -42,8 +40,6 @@ class CashFlowMapping(MyModel):
     class Meta:
         table_name = os.getenv("CASH_FLOW_MAPPING_TABLE")
         region = "us-west-2"
-        if os.getenv("ENV") == "LOCAL":
-            host = "http://localhost:8000"
 
     id = UnicodeAttribute(hash_key=True)
     name = UnicodeAttribute(null=True)
