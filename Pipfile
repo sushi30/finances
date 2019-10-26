@@ -17,8 +17,5 @@ pyjwt = "*"
 cryptography = "*"
 pandas = "*"
 
-[scripts]
-package = "zappa package dev -o build.zip"
-
 [requires]
 python_version = "3.7"
