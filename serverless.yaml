@@ -99,6 +99,7 @@ functions:
             name: auth
             identitySource: method.request.header.access_token
             resultTtlInSeconds: 0
+
   cashFlowMapping:
     handler: app/handlers.cash_flow_mapping_handler
     events:
@@ -120,6 +121,7 @@ functions:
             name: auth
             identitySource: method.request.header.access_token
             resultTtlInSeconds: 0
+
   processNewFile:
     handler: app/handlers.process_new_file
     timeout: 30
