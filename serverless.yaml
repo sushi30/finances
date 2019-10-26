@@ -20,7 +20,7 @@ provider:
   memorySize: 128
   timeout: 3
   environment:
-    CASH_FLOW_TABLE: ${self:service}-${opt:stage, self:provider.stage}-cash-table
+    CASH_FLOW_TABLE: ${self:service}-${opt:stage, self:provider.stage}-cash-table1
     CASH_FLOW_MAPPING_TABLE: ${self:service}-${opt:stage, self:provider.stage}-mapping-table
     MASTER_SECRET: ${self:service}-${opt:stage, self:provider.stage}-master-key
     USER_FILES_BUCKET: ${self:service}.${opt:stage, self:provider.stage}.user.files
