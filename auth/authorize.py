@@ -1,10 +1,11 @@
+import os
 import jwt
 from auth import PRIVATE_KEY
 from util import get_secret
 
 
 def auth(token):
-    if token == get_secret("finance/master/key")["key"]:
+    if token == get_secret(os.environ["MASTER_SECRET"])["key"]:
         return "admin"
     return jwt_verify(token)
 

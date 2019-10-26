@@ -20,9 +20,9 @@ provider:
   memorySize: 128
   timeout: 3
   environment:
-    CASH_FLOW_TABLE: ${self:service}-${opt:stage, self:provider.stage}/cash-table
-    CASH_FLOW_MAPPING_TABLE: ${self:service}-${opt:stage, self:provider.stage}/mapping-table
-    MASTER_SECRET: ${self:service}-${opt:stage, self:provider.stage}/master-key
+    CASH_FLOW_TABLE: ${self:service}-${opt:stage, self:provider.stage}-cash-table
+    CASH_FLOW_MAPPING_TABLE: ${self:service}-${opt:stage, self:provider.stage}-mapping-table
+    MASTER_SECRET: ${self:service}-${opt:stage, self:provider.stage}-master-key
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -32,16 +32,18 @@ provider:
         - dynamodb:PutItem
         - dynamodb:UpdateItem
         - dynamodb:DeleteItem
-      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:service}-${opt:stage, self:provider.stage}/*"
+      Resource: "arn:aws:dynamodb:${opt:region, self:provider.region}:*:table/${self:service}-${opt:stage, self:provider.stage}-*"
     - Effect: Allow
       Action:
         - secretsmanager:GetSecretValue
-      Resource: "arn:aws:secretsmanager:${opt:region, self:provider.region}:*:secret:${self:service}-${opt:stage, self:provider.stage}/*"
+      Resource: "arn:aws:secretsmanager:${opt:region, self:provider.region}:*:secret:${self:service}-${opt:stage, self:provider.stage}-*"
 
 functions:
   auth:
     handler: auth/handlers.authorize
     cors: true
+    environemnt:
+     MASTER_SECRET: ${self:provider.environment.MASTER_SECRET}
 
   cashFlow:
     handler: app/handlers.CashFlow.handler
