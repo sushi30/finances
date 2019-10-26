@@ -11,7 +11,7 @@ log.setLevel(LOG_LEVEL)
 class Resource:
     def __init__(self, event, context):
         event["body"] = json.loads(event.get("body") or "{}")
-        event["queryStringParameters"] = self.event["queryStringParameters"] or {}
+        event["queryStringParameters"] = event["queryStringParameters"] or {}
         self.event = event
         self.context = context
 
