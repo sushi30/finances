@@ -1,10 +1,8 @@
 import json
 from uuid import uuid4
-
 from pynamodb.attributes import UnicodeAttribute, NumberAttribute, UTCDateTimeAttribute
 from pynamodb.models import Model
 import os
-
 from app.util import date_json_converter
 
 
