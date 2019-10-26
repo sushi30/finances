@@ -15,7 +15,6 @@ phases:
   pre_build:
     commands:
       - npm install --only=dev
-      - pipenv install
   post_build:
     commands:
       - serverless deploy --stage dev
