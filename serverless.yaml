@@ -65,7 +65,7 @@ provider:
         - s3:ListAllMyBuckets
         - s3:ListJobs
         - s3:HeadBucket
-        - s3:ListBucket`
+        - s3:ListBucket
       Effect: Allow
       Resource: arn:aws:s3:::${self:service}.${opt:stage, self:provider.stage}.*/*
 
