@@ -42,11 +42,11 @@ functions:
   auth:
     handler: auth/handlers.authorize
     cors: true
-    environemnt:
-     MASTER_SECRET: ${self:provider.environment.MASTER_SECRET}
+    environment:
+      MASTER_SECRET_SUFFIX: -uTnKme
 
   cashFlow:
-    handler: app/handlers.CashFlow.handler
+    handler: app/handlers.cash_flow
     events:
       - http:
           method: any

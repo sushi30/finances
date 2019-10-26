@@ -33,6 +33,9 @@ class CashFlow(Resource):
         return cash_flow.get(uuid)
 
 
+cash_flow = CashFlow.handler
+
+
 @decorators
 def get_cash_flow_mapping(event, context):
     uuid = event["queryParameters"].get("id")
