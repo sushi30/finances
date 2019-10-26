@@ -61,6 +61,10 @@ provider:
         - s3:PutObjectTagging
         - s3:PutObjectVersionAcl
         - s3:PutObjectVersionTagging
+        - s3:GetAccountPublicAccessBlock
+        - s3:ListAllMyBuckets
+        - s3:ListJobs
+        - s3:HeadBucket
       Effect: Allow
       Resource: arn:aws:s3:::${self:provider.environment.USER_FILES_BUCKET}/*
 
