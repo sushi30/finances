@@ -89,23 +89,12 @@ functions:
             name: auth
             identitySource: method.request.header.access_token
 
-  getCashFlowMappings:
-    handler: app/handlers.get_cash_flow_mapping
+  cashFlowMapping:
+    handler: app/handlers.cash_flow_mapping_handler
     events:
       - http:
-          method: get
+          method: any
           path: /mapping
-          cors: true
-          authorizer:
-            name: auth
-            identitySource: method.request.header.access_token
-
-  putCashFlowMappings:
-    handler: app/handlers.put_cash_flow_mapping
-    events:
-      - http:
-          method: put
-          path: /cash
           cors: true
           authorizer:
             name: auth

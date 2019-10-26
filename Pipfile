@@ -18,6 +18,7 @@ lambda-decorators = "*"
 pyjwt = "*"
 cryptography = "*"
 pandas = "*"
+cashflow = "*"
 
 [requires]
 python_version = "3.7"
