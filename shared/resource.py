@@ -25,9 +25,8 @@ class Resource:
         except Exception as exception:
             traceback.print_exc()
             response = {"statusCode": 500, "body": str(exception)}
-        response["headers"] = {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Header": ["access_token"],
-        }
+        # response["headers"] = {
+        #     "Access-Control-Allow-Origin": "*"
+        # }
         log.debug("response: " + str(response))
         return response
