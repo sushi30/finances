@@ -1,6 +1,7 @@
 import logging
 from lambda_decorators import cors_headers, load_json_body, json_http_resp
 from app import LOG_LEVEL
+from app.parse_expenses import write_cash_flows_to_db, parse_file
 from app.resources import cash_flow, cash_flow_mapping
 from shared.resource import Resource
 
@@ -35,9 +36,8 @@ def put_cash_flow_mapping(event, context):
     return cash_flow_mapping.put(category, cash_flow_id, name, source)
 
 
-def process_expenses_files(event, context):
+def process_new_file(event, context):
     for r in event["Records"]:
-        process_file()
         log.info(str(r))
         df = parse_file(r["s3"]["bucket"]["name"], r["s3"]["object"]["key"])
         log.info(f"received {len(df)} rows of data")

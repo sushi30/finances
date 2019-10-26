@@ -105,6 +105,13 @@ functions:
             name: auth
             identitySource: method.request.header.access_token
 
+  processNewFile:
+    handler: app/handlers.process_new_file
+    events:
+      - s3:
+          bucket: ${self:provider.environment.USER_FILES_BUCKET}
+          event: s3:ObjectCreated:*
+
   hello:
     handler: hello/handlers.get
     events:
