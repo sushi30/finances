@@ -38,7 +38,7 @@ provider:
     - Effect: Allow
       Action:
         - secretsmanager:GetSecretValue
-      Resource: "arn:aws:secretsmanager:${opt:region, self:provider.region}:*:${self:provider.environment.MASTER_SECRET}*"
+      Resource: "arn:aws:secretsmanager:${opt:region, self:provider.region}:*:${self:provider.environment.MASTER_SECRET}-*"
 
 functions:
   auth:
