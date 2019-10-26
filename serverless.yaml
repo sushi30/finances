@@ -43,9 +43,7 @@ provider:
         - s3:*
       Effect: Allow
       Resource:
-        - arn:aws:s3:::${self:service}.${opt:stage, self:provider.stage}.*/*
-        - arn:aws:s3:::${self:provider.environment.USER_FILES_BUCKET}/*
-        - arn:aws:s3:::${self:provider.environment.USER_FILES_BUCKET}*
+        - arn:aws:s3:::${self:service}.${opt:stage, self:provider.stage}*
 
 functions:
   auth:
