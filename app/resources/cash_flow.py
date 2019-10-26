@@ -7,7 +7,7 @@ class CashFlow(Resource):
         uuid = self.event["queryStringParameters"].get("id")
         if uuid is None:
             records = CashFlowModel.to_records()
-            return [{**o, "date": o["date"].isoformat()} for o in records]
+            return [{**o, "date": o["date"].isoformat()} for o in records][:30]
 
     def put(*args, **kwargs):
         raise NotImplementedError()
