@@ -10,6 +10,7 @@ log.setLevel(LOG_LEVEL)
 
 class Resource:
     def __init__(self, event, context):
+        log.debug("received: " + str(event))
         event["body"] = json.loads(event.get("body") or "{}")
         event["queryStringParameters"] = event["queryStringParameters"] or {}
         self.event = event
@@ -25,6 +26,9 @@ class Resource:
         except Exception as exception:
             traceback.print_exc()
             response = {"statusCode": 500, "body": str(exception)}
-        response["headers"] = {"Access-Control-Allow-Origin": "*", "Access-Control-Allow-Header": ["access_token"]}
+        response["headers"] = {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Header": ["access_token"],
+        }
         log.debug("response: " + str(response))
         return response
