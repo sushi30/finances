@@ -141,10 +141,6 @@ functions:
 
 resources:
   Resources:
-    UserFilesBucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: ${self:provider.environment.USER_FILES_BUCKET}
     GatewayResponse:
       Type: 'AWS::ApiGateway::GatewayResponse'
       Properties:
