@@ -1,17 +1,23 @@
 from app.models import CashFlow as CashFlowModel
 from shared.resource import Resource
-from marhmallow import Schema, fields
+from marhmallow import Schema, fields, post_load
 
 
 class GetCashFlowSchema(Schema):
     id = fields.String(missing=None)
+    page = fields.Integer(missing=0)
+    size = fields.Integer(missing=10)
+
+    @post_load
+    def return_args(self, data, **kwargs):
+        return tuple(data[key] for key in ("id", "page", "size"))
 
 
 class CashFlow(Resource):
     def get(self):
-        uuid = self.event["queryStringParameters"].get("id")
-        page = int(self.event["queryStringParameters"].get("page", 0))
-        page_size = int(self.event["queryStringParameters"].get("size", 10))
+        uuid, page, key, size = GetCashFlowSchema.load(
+            self.event["queryStringParameters"]
+        )
         if uuid is None:
             records = CashFlowModel.to_records()
             return [{**o, "date": o["date"].isoformat()} for o in records][
