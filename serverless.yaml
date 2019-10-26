@@ -93,7 +93,7 @@ functions:
               - X-Api-Key
               - X-Amz-Security-Token
               - X-Amz-User-Agent
-              - acess_token
+              - access_token
             allowCredentials: false
           authorizer:
             name: auth
