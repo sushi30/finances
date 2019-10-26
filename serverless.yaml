@@ -107,6 +107,7 @@ functions:
 
   processNewFile:
     handler: app/handlers.process_new_file
+    timeout: 30
     events:
       - s3:
           bucket: ${self:provider.environment.USER_FILES_BUCKET}
