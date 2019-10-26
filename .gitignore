@@ -5,6 +5,7 @@ build.zip
 build
 node_modules
 .serverless
+temp
 
 # Created by https://www.gitignore.io/api/python
 # Edit at https://www.gitignore.io/?templates=python
