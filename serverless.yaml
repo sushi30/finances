@@ -169,7 +169,7 @@ resources:
         ResponseType: EXPIRED_TOKEN
         RestApiId:
           Ref: ApiGatewayRestApi
-        StatusCode: '401'
+        StatusCode: 401
     AuthFailureGatewayResponse:
       Type: AWS::ApiGateway::GatewayResponse
       Properties:
