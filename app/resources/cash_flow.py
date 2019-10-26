@@ -21,7 +21,7 @@ class CashFlow(Resource):
         if uuid is None:
             records = CashFlowModel.to_records()
             return [{**o, "date": o["date"].isoformat()} for o in records][
-                page * page_size : page * (page_size + 1)
+                page_size * page : page_size * (page + 1)
             ]
         else:
             item = next(CashFlowModel.query(hash_key=uuid)).attribute_values
