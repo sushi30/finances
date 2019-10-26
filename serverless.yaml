@@ -23,7 +23,7 @@ provider:
     CASH_FLOW_TABLE: ${self:service}-${opt:stage, self:provider.stage}-cash-table
     CASH_FLOW_MAPPING_TABLE: ${self:service}-${opt:stage, self:provider.stage}-mapping-table
     MASTER_SECRET: ${self:service}-${opt:stage, self:provider.stage}-master-key
-    USER_FILES_BUCKET: ${self:service}-${opt:stage, self:provider.stage}-user-files
+    USER_FILES_BUCKET: ${self:service}.${opt:stage, self:provider.stage}.user.files
     ENV: ${opt:stage, self:provider.stage}
   iamRoleStatements:
     - Effect: Allow
@@ -65,7 +65,7 @@ provider:
         - s3:PutObjectVersionAcl
         - s3:PutObjectVersionTagging
       Effect: Allow
-      Resource: arn:aws:s3:::${self:service}-${opt:stage, self:provider.stage}-*/*
+      Resource: arn:aws:s3:::${self:service}.${opt:stage, self:provider.stage}.*/*
 
 functions:
   auth:
