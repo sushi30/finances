@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from uuid import uuid4
 from pynamodb.attributes import UnicodeAttribute, NumberAttribute, UTCDateTimeAttribute
 from pynamodb.models import Model
@@ -15,6 +16,19 @@ class MyModel(Model):
     def to_records(cls):
         return [i.attribute_values for i in list(cls.scan())]
 
+    @classmethod
+    def aggregation(cls, initial, reducer, conditions=None):
+        current = initial
+        for o in cls.scan(conditions):
+            current = reducer(current, o)
+        return current
+
+    @classmethod
+    def max(cls, field, condition=None):
+        def reducer(current, next):
+            return max(current, next.attribute_values[field.attr_name].replace(tzinfo=None))
+        return cls.aggregation(datetime(1900, 1, 1), reducer)
+
 
 class CashFlow(MyModel):
     class Meta:
@@ -22,7 +36,7 @@ class CashFlow(MyModel):
         region = "us-west-2"
 
     id = UnicodeAttribute(hash_key=True)
-    date = UTCDateTimeAttribute()
+    date = UTCDateTimeAttribute(range_key=True)
     name = UnicodeAttribute()
     value = NumberAttribute()
     details = UnicodeAttribute(null=True)
