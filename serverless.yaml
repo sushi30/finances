@@ -64,6 +64,7 @@ provider:
         - s3:GetAccountPublicAccessBlock
         - s3:ListAllMyBuckets
         - s3:ListJobs
+        - s3:ListObjectsV2
         - s3:HeadBucket
       Effect: Allow
       Resource: arn:aws:s3:::${self:provider.environment.USER_FILES_BUCKET}/*
