@@ -14,7 +14,7 @@ phases:
       - npm install serverless -g
   pre_build:
     commands:
-      - npm install --dev
+      - npm install --only=dev
       - pipenv install
   post_build:
     commands:
