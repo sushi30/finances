@@ -1,10 +1,8 @@
-import json
 import logging
-
 from lambda_decorators import cors_headers, load_json_body, json_http_resp
-
 from app import LOG_LEVEL
 from app.resources import cash_flow, cash_flow_mapping
+from shared.resource import Resource
 
 log = logging.getLogger(__name__)
 log.setLevel(LOG_LEVEL)
@@ -12,26 +10,6 @@ log.setLevel(LOG_LEVEL)
 
 def decorators(func):
     return cors_headers()(load_json_body((json_http_resp(func))))
-
-
-class Resource:
-    def __init__(self, event, context):
-        event["body"] = json.loads(event.get("body", "{}"))
-        self.event = event
-        self.context = context
-
-    @classmethod
-    def handler(cls, event, context):
-        log.debug("received event: " + str(event))
-        http_method = event["httpMethod"].lower()
-        try:
-            res = cls(event, context).__getattribute__(http_method)()
-            response = {"statusCode": 200, "body": json.dumps(res)}
-        except Exception as exception:
-            response = {"statusCode": 500, "body": str(exception)}
-        response["headers"] = {"Access-Control-Allow-Origin": "*"}
-        log.debug("response: " + str(response))
-        return response
 
 
 class CashFlow(Resource):
