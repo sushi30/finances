@@ -1,6 +1,6 @@
 from app.models import CashFlow as CashFlowModel
 from shared.resource import Resource
-from marhmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load
 
 
 class GetCashFlowSchema(Schema):
@@ -15,7 +15,7 @@ class GetCashFlowSchema(Schema):
 
 class CashFlow(Resource):
     def get(self):
-        uuid, page, key, page_size = GetCashFlowSchema.load(
+        uuid, page, key, page_size = GetCashFlowSchema().load(
             self.event["queryStringParameters"]
         )
         if uuid is None:
