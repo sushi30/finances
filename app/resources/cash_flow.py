@@ -6,7 +6,7 @@ class CashFlow(Resource):
     def get(self):
         uuid = self.event["queryStringParameters"].get("id")
         page = int(self.event["queryStringParameters"].get("page", 0))
-        page_size = int(self.event["queryStringParameters"].get("size", 1))
+        page_size = int(self.event["queryStringParameters"].get("size", 10))
         if uuid is None:
             records = CashFlowModel.to_records()
             return [{**o, "date": o["date"].isoformat()} for o in records][
