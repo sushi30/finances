@@ -85,8 +85,8 @@ functions:
           method: any
           path: /cash
           cors:
-            origin: '*' # <-- Specify allowed origin
-            headers: # <-- Specify allowed headers
+            origin: '*'
+            headers:
               - Content-Type
               - X-Amz-Date
               - Authorization
