@@ -7,7 +7,7 @@ from shared import LOG_LEVEL
 log = logging.getLogger(__name__)
 log.setLevel(LOG_LEVEL)
 
-HEADERS = {"Access-Control-Allow-Origin": "*"}
+HEADERS = {"Access-Control-Allow-Origin": "*", "Content-Type": "application/json"}
 
 
 class Resource:
@@ -23,9 +23,9 @@ class Resource:
         http_method = event["httpMethod"].lower()
         try:
             res = cls(event, context).__getattribute__(http_method)()
-            response = {"statusCode": 200, "body": json.dumps(res), **HEADERS}
+            response = {"statusCode": 200, "body": json.dumps(res), "headers": HEADERS}
             log.debug("response: " + str(response))
             return response
         except Exception as exception:
             traceback.print_exc()
-            return {"statusCode": 500, "body": str(exception), **HEADERS}
+            return {"statusCode": 500, "body": str(exception), "headers": HEADERS}
