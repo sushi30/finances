@@ -1,7 +1,7 @@
 import json
 import logging
 from datetime import datetime
-
+from io import BytesIO
 import boto3
 import pandas as pd
 from app import LOG_LEVEL
@@ -31,7 +31,9 @@ def get_leumicard(bucket, key):
     log.debug("received path: " + str((bucket, key)))
     dfs = []
     for i in [0, 1]:
-        excel_file = boto3.resource("s3").Object(bucket, key).get()["Body"]
+        excel_file = BytesIO(
+            boto3.resource("s3").Object(bucket, key).get()["Body"].read()
+        )
         temp = pd.read_excel(excel_file, header=3, sheet_name=i)
         temp = temp[temp.columns[[0, 1, 5, 10]]]
         temp.columns = ["date", "name", "value", "details"]
