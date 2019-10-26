@@ -67,7 +67,7 @@ provider:
         - s3:HeadBucket
         - s3:ListBucket`
       Effect: Allow
-      Resource: arn:aws:s3:::${self:provider.environment.USER_FILES_BUCKET}/*
+      Resource: arn:aws:s3:::${self:service}.${opt:stage, self:provider.stage}.*/*
 
 functions:
   auth:
