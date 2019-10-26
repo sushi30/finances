@@ -24,6 +24,7 @@ class Resource:
             response = {"statusCode": 500, "body": str(exception)}
 
         response["headers"] = {"Access-Control-Allow-Origin": "*"}
+        return response
 
 
 class CashFlow(Resource):
