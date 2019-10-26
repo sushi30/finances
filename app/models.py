@@ -13,7 +13,7 @@ class MyModel(Model):
 
     @classmethod
     def to_records(cls):
-        return [i.attribute_values for i in list(cls.scan())][:10]
+        return [i.attribute_values for i in list(cls.scan())]
 
 
 class CashFlow(MyModel):
