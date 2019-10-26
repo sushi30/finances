@@ -38,7 +38,7 @@ provider:
     - Effect: Allow
       Action:
         - secretsmanager:GetSecretValue
-      Resource: "arn:aws:secretsmanager:${opt:region, self:provider.region}:*:${self:provider.environment.MASTER_SECRET}"
+      Resource: "arn:aws:secretsmanager:${opt:region, self:provider.region}:*:${self:provider.environment.MASTER_SECRET}*"
 
 functions:
   auth:
@@ -46,7 +46,7 @@ functions:
     cors: true
 
   cashFlow:
-    handler: app/handlers.cash_flows
+    handler: app/handlers.CashFlow.handler
     events:
       - http:
           method: any
@@ -142,7 +142,7 @@ resources:
       Properties:
         AttributeDefinitions:
           - AttributeName: id
-            AttributeType: D
+            AttributeType: S
           - AttributeName: date
             AttributeType: N
         KeySchema:
@@ -157,7 +157,7 @@ resources:
       Properties:
         AttributeDefinitions:
           - AttributeName: id
-            AttributeType: D
+            AttributeType: S
         KeySchema:
           - AttributeName: id
             KeyType: HASH

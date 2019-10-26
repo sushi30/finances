@@ -6,14 +6,21 @@ def decorators(func):
     return cors_headers()(load_json_body((json_http_resp(func))))
 
 
-@decorators
-def cash_flows(event, context):
-    method = event["httpMethod"].lower()
-    if method == "get":
-        uuid = event["queryStringParameters"].get("id")
+class Resource:
+    def __init__(self, event, context):
+        self.event = event
+        self.context = context
+
+    @classmethod
+    def handler(cls, event, context):
+        method = event["httpMethod"].lower()
+        return cls(event, context).__getattribute__(method)()
+
+
+class CashFlow(Resource):
+    def get(self):
+        uuid = self.event["queryStringParameters"].get("id")
         return cash_flow.get(uuid)
-    else:
-        raise
 
 
 @decorators
