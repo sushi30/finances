@@ -1,3 +1,5 @@
+import json
+
 from lambda_decorators import cors_headers, load_json_body, json_http_resp
 from app.resources import cash_flow, cash_flow_mapping
 
@@ -8,13 +10,20 @@ def decorators(func):
 
 class Resource:
     def __init__(self, event, context):
+        event["body"] = json.loads(event.get("body", "{}"))
         self.event = event
         self.context = context
 
     @classmethod
     def handler(cls, event, context):
-        method = event["httpMethod"].lower()
-        return cls(event, context).__getattribute__(method)()
+        http_method = event["httpMethod"].lower()
+        try:
+            res = cls(event, context).__getattribute__(http_method)()
+            response = {"statusCode": 200, "body": json.dumps(res)}
+        except Exception as exception:
+            response = {"statusCode": 500, "body": str(exception)}
+
+        response["headers"] = {"Access-Control-Allow-Origin": "*"}
 
 
 class CashFlow(Resource):
