@@ -2,7 +2,7 @@ version: 0.2
 
 env:
   variables:
-    SLS_DEBUG: 1
+    SLS_DEBUG: *
 
 phases:
   install:
