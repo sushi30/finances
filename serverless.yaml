@@ -42,8 +42,6 @@ functions:
   auth:
     handler: auth/handlers.authorize
     cors: true
-    environment:
-      MASTER_SECRET_SUFFIX: -uTnKme
 
   cashFlow:
     handler: app/handlers.cash_flow
