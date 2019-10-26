@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0ade04e085d94a52783efcad8cb24eb144ca766c841d1cd03b8595efd4850414"
+            "sha256": "2f903016ebe2d33c281ce4255276d882afe290ea4be47cb5b9cd6c8fb581a003"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -108,12 +108,6 @@
                 "sha256:a2aeea129088da402665e92e0b25b04b073c04b2dce4ab65caaa38b7ce2e1a99"
             ],
             "version": "==0.15.2"
-        },
-        "fsspec": {
-            "hashes": [
-                "sha256:6531a5fa9ea6bf27a5180d225558a8a7aa5d7c3cbf7e8b146dd37ac699017937"
-            ],
-            "version": "==0.5.2"
         },
         "importlib-metadata": {
             "hashes": [
@@ -245,13 +239,6 @@
             ],
             "version": "==2019.3"
         },
-        "s3fs": {
-            "hashes": [
-                "sha256:f1d8d80ae7789e6c95f8432e3ec12d1c28e624aecf8c84afed373fb182b505ab"
-            ],
-            "index": "pypi",
-            "version": "==0.3.5"
-        },
         "s3transfer": {
             "hashes": [
                 "sha256:6efc926738a3cd576c2a79725fed9afde92378aa5c6a957e3af010cb019fac9d",
@@ -273,14 +260,6 @@
             ],
             "markers": "python_version >= '3.4'",
             "version": "==1.25.6"
-        },
-        "xlrd": {
-            "hashes": [
-                "sha256:546eb36cee8db40c3eaa46c351e67ffee6eeb5fa2650b71bc4c758a29a1b29b2",
-                "sha256:e551fb498759fa3a5384a94ccd4c3c02eb7c00ea424426e212ac0c57be9dfbde"
-            ],
-            "index": "pypi",
-            "version": "==1.2.0"
         },
         "zipp": {
             "hashes": [
