@@ -1,5 +1,5 @@
 org: imriparan
-service: financeServer
+service: finance-server
 
 plugins:
   - serverless-python-requirements
