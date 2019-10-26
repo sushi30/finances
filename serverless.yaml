@@ -69,6 +69,7 @@ provider:
       Effect: Allow
       Resource:
         - arn:aws:s3:::${self:service}.${opt:stage, self:provider.stage}*
+        - arn:aws:s3:::${self:service}.${opt:stage, self:provider.stage}*/*
 
 functions:
   auth:
