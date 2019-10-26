@@ -105,7 +105,17 @@ functions:
       - http:
           method: any
           path: /mapping
-          cors: true
+          cors:
+            origin: '*'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+              - X-Amz-User-Agent
+              - access_token
+            allowCredentials: false
           authorizer:
             name: auth
             identitySource: method.request.header.access_token
