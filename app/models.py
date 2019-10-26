@@ -26,7 +26,10 @@ class MyModel(Model):
     @classmethod
     def max(cls, field, condition=None):
         def reducer(current, next):
-            return max(current, next.attribute_values[field.attr_name].replace(tzinfo=None))
+            return max(
+                current, next.attribute_values[field.attr_name].replace(tzinfo=None)
+            )
+
         return cls.aggregation(datetime(1900, 1, 1), reducer)
 
 

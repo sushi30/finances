@@ -21,6 +21,7 @@ class Resource:
     def handler(cls, event, context):
         log.debug("received event: " + str(event))
         http_method = event["httpMethod"].lower()
+        log.info(f"calling ${http_method} for {cls.__name__}")
         try:
             res = cls(event, context).__getattribute__(http_method)()
             response = {"statusCode": 200, "body": json.dumps(res), "headers": HEADERS}
