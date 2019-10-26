@@ -22,7 +22,7 @@ class Resource:
 
     @classmethod
     def handler(cls, event, context):
-        log.debug("received event: " + json.dumps(event))
+        log.debug("received event: " + str(event))
         http_method = event["httpMethod"].lower()
         try:
             res = cls(event, context).__getattribute__(http_method)()
