@@ -12,7 +12,7 @@ log = logging.getLogger(__name__)
 
 def parse_file(bucket, key):
     switcher = {"leumicard": get_leumicard}
-    return switcher[key.split("/")[0]](f"s3://{bucket}/{key}")
+    return switcher[key.split("/")[0]](bucket, key)
 
 
 def write_cash_flows_to_db(cash_flows: pd.DataFrame):

@@ -1,6 +1,8 @@
 import json
 import logging
 from datetime import datetime
+
+import boto3
 import pandas as pd
 from app import LOG_LEVEL
 
@@ -25,11 +27,12 @@ def get_fibi(path):
 
 
 # noinspection PyTypeChecker
-def get_leumicard(path):
-    log.debug("received path: " + str(path))
+def get_leumicard(bucket, key):
+    log.debug("received path: " + str((bucket, key)))
     dfs = []
     for i in [0, 1]:
-        temp = pd.read_excel(path, header=3, sheet_name=i)
+        excel_file = boto3.resource("s3").Object(bucket, key).get()["Body"]
+        temp = pd.read_excel(excel_file, header=3, sheet_name=i)
         temp = temp[temp.columns[[0, 1, 5, 10]]]
         temp.columns = ["date", "name", "value", "details"]
         dfs.append(temp)
