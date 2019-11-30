@@ -67,17 +67,20 @@ def create_app(config):
 
         SSLify(app)
 
+    # fmt: off
     # Create app blueprints
     from .main import main as main_blueprint
-
     app.register_blueprint(main_blueprint)
 
     from .account import account as account_blueprint
-
     app.register_blueprint(account_blueprint, url_prefix="/account")
 
     from .admin import admin as admin_blueprint
-
     app.register_blueprint(admin_blueprint, url_prefix="/admin")
+
+    from .api import blueprint as api_blueprint
+    app.register_blueprint(api_blueprint, url_prefix="/api")
+
+    # fmt: on
 
     return app
