@@ -2,6 +2,7 @@ import os
 from flask import Flask
 from flask_assets import Environment
 from flask_compress import Compress
+from flask_cors import CORS
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_rq import RQ
@@ -16,6 +17,7 @@ mail = Mail()
 db = SQLAlchemy()
 csrf = CSRFProtect()
 compress = Compress()
+
 
 # Set up Flask-Login
 login_manager = LoginManager()
@@ -40,9 +42,9 @@ def create_app(config):
     mail.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
-    csrf.init_app(app)
     compress.init_app(app)
     RQ(app)
+    CORS(app)
 
     # Register Jinja template functions
     from .utils import register_template_utils
