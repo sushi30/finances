@@ -1,11 +1,9 @@
 import os
 from flask import Flask
-from flask_assets import Environment
 from flask_compress import Compress
 from flask_cors import CORS
 from flask_login import LoginManager
 from flask_mail import Mail
-from flask_rq import RQ
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import CSRFProtect
 from app.assets import app_css, app_js, vendor_css, vendor_js
