@@ -38,30 +38,9 @@ def create_app(config):
 
     Config[config_name].init_app(app)
 
-    # Set up extensions
-    mail.init_app(app)
     db.init_app(app)
     login_manager.init_app(app)
-    compress.init_app(app)
-    RQ(app)
     CORS(app)
-
-    # Register Jinja template functions
-    from .utils import register_template_utils
-
-    register_template_utils(app)
-
-    # Set up asset pipeline
-    assets_env = Environment(app)
-    dirs = ["assets/styles", "assets/scripts"]
-    for path in dirs:
-        assets_env.append_path(os.path.join(basedir, path))
-    assets_env.url_expire = True
-
-    assets_env.register("app_css", app_css)
-    assets_env.register("app_js", app_js)
-    assets_env.register("vendor_css", vendor_css)
-    assets_env.register("vendor_js", vendor_js)
 
     # Configure SSL if platform supports it
     if not app.debug and not app.testing and not app.config["SSL_DISABLE"]:
