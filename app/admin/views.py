@@ -19,7 +19,6 @@ from app.admin.forms import (
 )
 from app.decorators import admin_required
 from app.email import send_email
-from app.models import EditableHTML, Role, User
 
 admin = Blueprint('admin', __name__)
 

@@ -15,7 +15,6 @@ from wtforms.validators import (
 )
 
 from app import db
-from app.models import Role, User
 
 
 class ChangeUserEmailForm(FlaskForm):

@@ -7,8 +7,6 @@ verify_ssl = true
 pytest = "*"
 python-dotenv = "*"
 pytest-freezegun = "*"
-flask = "*"
-flask-cors = "*"
 click = "*"
 
 [packages]
@@ -20,6 +18,7 @@ cashflow = "*"
 marshmallow = "*"
 sqlalchemy = "*"
 flask = "*"
+flask-cors = "*"
 python-dotenv = "*"
 Flask-Assets = "==0.12"
 Flask-Compress = "==1.4.0"
@@ -35,6 +34,7 @@ alembic = "==1.1.0"
 Jinja2 = "==2.10.1"
 raygun4py = "==4.3.0"
 flask-restplus = "*"
+mysql-client = "*"
 
 [requires]
 python_version = "3.7"

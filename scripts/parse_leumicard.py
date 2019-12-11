@@ -1,8 +1,6 @@
 import datetime
 import json
 import uuid
-from uuid import uuid5
-
 import click
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -36,10 +34,11 @@ def transaction_to_to_cash_model(transaction, extra=""):
 def main(path, out, storage):
     with open(path, "rb") as excel_file:
         res = LeumiCardParser(excel_file).parse()
+    transactions = [t.to_dict() for t in res.transactions]
     if out is not None:
-        with open(out, "rb") as excel_file:
-            json.dumps(res)
-    if storage is not None:
+        with open(out, "wb") as excel_file:
+            json.dump(transactions, excel_file, default=datetime_converter)
+    elif storage is not None:
         engine = create_engine(storage)
         Session = sessionmaker(bind=engine)
         session = Session()
@@ -47,13 +46,16 @@ def main(path, out, storage):
         for cf in res.transactions:
             cf_objects.append(transaction_to_to_cash_model(cf))
         try:
-            session.add_all(cf_objects)
+            session.add(cf_objects[8])
             session.commit()
         except:
             session.rollback()
             raise
         finally:
             session.close()
+    else:
+        print(json.dumps(transactions, default=datetime_converter, indent=2))
+
 
 
 if __name__ == "__main__":

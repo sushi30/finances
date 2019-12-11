@@ -3,8 +3,6 @@ from functools import wraps
 from flask import abort
 from flask_login import current_user
 
-from app.models import Permission
-
 
 def permission_required(permission):
     """Restrict a view to users with the given permission."""
@@ -22,4 +20,4 @@ def permission_required(permission):
 
 
 def admin_required(f):
-    return permission_required(Permission.ADMINISTER)(f)
+    pass

@@ -13,7 +13,7 @@ class LeumiCardParser(Parser):
     def parse(self):
         self.wb = xlrd.open_workbook(file_contents=self.file.read())
         for i in range(self.wb.nsheets):
-            self.it = iter(self.wb.sheet_by_index(0).get_rows())
+            self.it = iter(self.wb.sheet_by_index(i).get_rows())
             while True:
                 try:
                     row = next(self.it)
