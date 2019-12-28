@@ -5,7 +5,7 @@ from shared.resource import Resource
 
 @pytest.fixture
 def example_event():
-    with open("../../api_gateway_event_exmple.json") as f:
+    with open("../../api_gateway_event_example.json") as f:
         return json.load(f)["input"]
 
 

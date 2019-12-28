@@ -6,7 +6,7 @@ class Parser(ABC):
     transactions = []
 
     def transactions_as_dict(self):
-        return [t.dumps() for t in self.transactions]
+        return [t.to_dict() for t in self.transactions]
 
     def parser(self,):
         pass

@@ -5,6 +5,7 @@ import click
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.models.cash_flow import CashFlow
+from parsers.isracard_parser import IsraCardParser
 from parsers.leumicard_parser import LeumiCardParser
 
 UUID_NAMESPACE = uuid.UUID("c9def9830ffd4a2293aeb804e0d121ec")
@@ -29,11 +30,13 @@ def transaction_to_to_cash_model(transaction, extra=""):
 
 @click.command()
 @click.argument("path")
+@click.argument("type")
 @click.option("--out", default=None)
 @click.option("--storage", default=None)
-def main(path, out, storage):
+def main(path, type, out, storage):
+    parsers = {"leumicard": LeumiCardParser, "isracard": IsraCardParser}
     with open(path, "rb") as excel_file:
-        res = LeumiCardParser(excel_file).parse()
+        res = parsers[type](excel_file).parse()
     transactions = [t.to_dict() for t in res.transactions]
     if out is not None:
         with open(out, "wb") as excel_file:
@@ -55,7 +58,6 @@ def main(path, out, storage):
             session.close()
     else:
         print(json.dumps(transactions, default=datetime_converter, indent=2))
-
 
 
 if __name__ == "__main__":
