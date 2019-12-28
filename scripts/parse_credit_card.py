@@ -18,22 +18,17 @@ def datetime_converter(obj):
 
 def transaction_to_to_cash_model(transaction, extra=""):
     kwargs = {
-        "date": transaction.date.isoformat(),
+        "date": transaction.date,
         "name": transaction.business,
         "value": transaction.value,
         "source": "Leumicard",
-        "id": uuid.uuid4(),
+        "id": uuid.uuid4().hex,
         "details": json.dumps(transaction.to_dict(), default=datetime_converter),
     }
     return CashFlow(**kwargs)
 
 
-@click.command()
-@click.argument("type")
-@click.argument("path")
-@click.option("--out", default=None)
-@click.option("--storage", default=None)
-def main(type, path, out, storage):
+def inner(type, path, out=None, storage=None):
     parsers = {"leumicard": LeumiCardParser, "isracard": IsraCardParser}
     with open(path, "rb") as excel_file:
         res = parsers[type](excel_file).parse()
@@ -49,7 +44,7 @@ def main(type, path, out, storage):
         for cf in res.transactions:
             cf_objects.append(transaction_to_to_cash_model(cf))
         try:
-            session.add(cf_objects[8])
+            session.add_all(cf_objects)
             session.commit()
         except:
             session.rollback()
@@ -58,6 +53,15 @@ def main(type, path, out, storage):
             session.close()
     else:
         print(json.dumps(transactions, default=datetime_converter, indent=2))
+
+
+@click.command()
+@click.argument("type")
+@click.argument("path")
+@click.option("--out", default=None)
+@click.option("--storage", default=None)
+def main(type, path, out, storage):
+    inner(type, path, out, storage)
 
 
 if __name__ == "__main__":
