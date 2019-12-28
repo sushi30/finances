@@ -29,11 +29,11 @@ def transaction_to_to_cash_model(transaction, extra=""):
 
 
 @click.command()
-@click.argument("path")
 @click.argument("type")
+@click.argument("path")
 @click.option("--out", default=None)
 @click.option("--storage", default=None)
-def main(path, type, out, storage):
+def main(type, path, out, storage):
     parsers = {"leumicard": LeumiCardParser, "isracard": IsraCardParser}
     with open(path, "rb") as excel_file:
         res = parsers[type](excel_file).parse()

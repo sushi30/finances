@@ -16,8 +16,11 @@ class Transaction:
             try:
                 self.date = datetime.strptime(self.date, "%d/%m/%Y")
             except:
-                print(self.to_dict())
-                raise
+                try:
+                    self.date = datetime.strptime(self.date, "%d-%m-%Y")
+                except:
+                    print(self.to_dict())
+                    raise
 
         self.value = float(self.value)
 
