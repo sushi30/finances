@@ -1,7 +1,6 @@
 import datetime
 import json
 import uuid
-import click
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from app.models.cash_flow import CashFlow
@@ -28,15 +27,14 @@ def transaction_to_to_cash_model(transaction, source, extra=""):
     return CashFlow(**kwargs)
 
 
-def inner(type, path, out=None, storage=None):
+def inner(type, excel_file, out=None, storage=None):
     parsers = {"leumicard": LeumiCardParser, "isracard": IsraCardParser}
     sources = {"leumicard": "Leumicard", "isracard": "Isracard"}
-    with open(path, "rb") as excel_file:
-        res = parsers[type](excel_file).parse()
+    res = parsers[type](excel_file).parse()
     transactions = [t.to_dict() for t in res.transactions]
     if out is not None:
-        with open(out, "wb") as excel_file:
-            json.dump(transactions, excel_file, default=datetime_converter)
+        with open(out, "wb") as fp:
+            json.dump(transactions, fp, default=datetime_converter)
     elif storage is not None:
         engine = create_engine(storage)
         Session = sessionmaker(bind=engine)
@@ -54,16 +52,3 @@ def inner(type, path, out=None, storage=None):
             session.close()
     else:
         print(json.dumps(transactions, default=datetime_converter, indent=2))
-
-
-@click.command()
-@click.argument("type")
-@click.argument("path")
-@click.option("--out", default=None)
-@click.option("--storage", default=None)
-def main(type, path, out, storage):
-    inner(type, path, out, storage)
-
-
-if __name__ == "__main__":
-    main()
