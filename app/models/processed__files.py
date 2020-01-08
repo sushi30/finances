@@ -16,4 +16,4 @@ class GeneralCashFlowMapping(CashFlowMapping, db.Model):
 class SpecificCashFlowMapping(CashFlowMapping, db.Model):
     __tablename__ = "specific_cash_flow_mapping"
 
-    cash_flow_id = db.Column(UUID, nullable=True, primary_key=True)
+    cash_flow_id = db.Column(UUID, nullable=True, primary_key=False)

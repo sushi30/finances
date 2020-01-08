@@ -27,7 +27,7 @@ def transaction_to_to_cash_model(transaction, source, extra=""):
     return CashFlow(**kwargs)
 
 
-def inner(type, excel_file, out=None, storage=None):
+def parse_credit_card(type, excel_file, out=None, storage=None):
     parsers = {"leumicard": LeumiCardParser, "isracard": IsraCardParser}
     sources = {"leumicard": "Leumicard", "isracard": "Isracard"}
     res = parsers[type](excel_file).parse()

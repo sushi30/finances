@@ -3,7 +3,8 @@ from abc import ABC
 
 
 class Parser(ABC):
-    transactions = []
+    def __init__(self):
+        self.transactions = []
 
     def transactions_as_dict(self):
         return [t.to_dict() for t in self.transactions]
