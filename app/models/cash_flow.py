@@ -1,12 +1,15 @@
+from sqlalchemy import DateTime, String, Float, JSON, Column
+from sqlalchemy.ext.declarative import declarative_base
 from .base import UUIDModel
-from . import db
+
+Base = declarative_base()
 
 
-class CashFlow(UUIDModel, db.Model):
+class CashFlow(UUIDModel, Base):
     __tablename__ = "cash_flow"
 
-    date = db.Column(db.DATETIME(), nullable=False)
-    name = db.Column(db.VARCHAR(256), nullable=False)
-    value = db.Column(db.FLOAT(), nullable=False)
-    details = db.Column(db.TEXT, nullable=True)
-    source = db.Column(db.VARCHAR(256), nullable=False)
+    date = Column(DateTime(), nullable=False)
+    name = Column(String(256), nullable=False)
+    value = Column(Float(), nullable=False)
+    details = Column(JSON, nullable=True)
+    source = Column(String(256), nullable=False)

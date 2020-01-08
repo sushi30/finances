@@ -16,12 +16,12 @@ def datetime_converter(obj):
         return obj.isoformat()
 
 
-def transaction_to_to_cash_model(transaction, extra=""):
+def transaction_to_to_cash_model(transaction, source, extra=""):
     kwargs = {
         "date": transaction.date,
         "name": transaction.business,
         "value": transaction.value,
-        "source": "Leumicard",
+        "source": source,
         "id": uuid.uuid4().hex,
         "details": json.dumps(transaction.to_dict(), default=datetime_converter),
     }
@@ -30,6 +30,7 @@ def transaction_to_to_cash_model(transaction, extra=""):
 
 def inner(type, path, out=None, storage=None):
     parsers = {"leumicard": LeumiCardParser, "isracard": IsraCardParser}
+    sources = {"leumicard": "Leumicard", "isracard": "Isracard"}
     with open(path, "rb") as excel_file:
         res = parsers[type](excel_file).parse()
     transactions = [t.to_dict() for t in res.transactions]
@@ -42,7 +43,7 @@ def inner(type, path, out=None, storage=None):
         session = Session()
         cf_objects = []
         for cf in res.transactions:
-            cf_objects.append(transaction_to_to_cash_model(cf))
+            cf_objects.append(transaction_to_to_cash_model(cf, sources[type]))
         try:
             session.add_all(cf_objects)
             session.commit()
