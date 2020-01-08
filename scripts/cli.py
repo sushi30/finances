@@ -3,25 +3,29 @@ from scripts.parse_credit_card import inner
 
 
 @click.group()
-@click.option("--out", default=None)
-@click.option("--storage", default=None)
-@click.pass_context
-def cli(ctx, **kwargs):
-    ctx.obj = kwargs
+def cli():
+    pass
 
 
-@cli.command()
-@click.argument("path", type=click.File(mode="rb"))
-@click.pass_context
-def isracard(ctx, path):
-    inner("isracard", path, ctx.obj["out"], ctx.obj["storage"])
+def decorate(f):
+    for dec in [
+        click.argument("path", type=click.File(mode="rb")),
+        click.option("--out", default=None),
+        click.option("--storage", default=None),
+        cli.command(),
+    ]:
+        f = dec(f)
+    return f
 
 
-@cli.command()
-@click.argument("path", type=click.File(mode="rb"))
-@click.pass_context
-def leumicard(ctx, path):
-    inner("leumicard", path, ctx.obj["out"], ctx.obj["storage"])
+@decorate
+def isracard(out, storage, path):
+    inner("isracard", path, out, storage)
+
+
+@decorate
+def leumicard(out, storage, path):
+    inner("leumicard", path, out, storage)
 
 
 if __name__ == "__main__":
